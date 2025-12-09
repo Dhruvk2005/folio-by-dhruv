@@ -8,6 +8,7 @@ import { LayoutTextFlipDemo } from '../components/herotext'
 import { PixelatedCanvasDemo } from '../components/pixelimage'
 
 import SkillJourneyMap from '../components/SkillJourneyMap'
+import { Resumebutton } from '../components/resumebutton'
 const Mainscreen = () => {
   return (
     <div>
@@ -19,11 +20,11 @@ const Mainscreen = () => {
 
           <div className='absolute z-10 mt-[200px] ml-[20px] ' >
             <h1 className=' text-[60px] text-[white] font-bold  ' >Hello</h1>
-            <h1 className=' text-[60px] text-[white] font-bold  ' >I'm Dhruv Khade</h1>
+            <h1 className=' text-[60px] text-[white] font-bold -mt-[10px] ' >I'm Dhruv Khade</h1>
            
             <LayoutTextFlipDemo />
-             <button className='p-[15px] bg-[white] ml-[4px] rounded-[10px] font-semibold mt-[10px] hover:scale-110 transition-all cursor-pointer ease-in-out duration-200 ' >Download Resume</button>
-
+             {/* <button className='p-[15px] bg-[white] ml-[4px] rounded-[10px] font-semibold mt-[10px] hover:scale-110 transition-all cursor-pointer ease-in-out duration-200 ' >Download Resume</button> */}
+             <button className='mt-[20px] ml-[4px] ' ><Resumebutton/></button>
           </div>
           <div className='' >
             <PixelatedCanvasDemo />
