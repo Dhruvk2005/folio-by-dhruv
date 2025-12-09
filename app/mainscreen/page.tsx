@@ -2,12 +2,12 @@ import React from 'react'
 import Beams from '../components/beamsbg'
 import Navbar from '../components/navbar'
 import ProfileCard from '../components/profilecard'
-import { MacbookScrollDemo } from '../components/laptop'
 import { EncryptedText } from '../components/ui/encrypted-text'
 import { HeroParallaxDemo } from '../components/parallax'
 import { LayoutTextFlipDemo } from '../components/herotext'
 import { PixelatedCanvasDemo } from '../components/pixelimage'
 import AnimatedProfessionalSkillBars from '../components/skillbar'
+import SkillJourneyMap from '../components/SkillJourneyMap'
 const Mainscreen = () => {
   return (
     <div>
@@ -47,9 +47,12 @@ const Mainscreen = () => {
           <HeroParallaxDemo />
         </div>
 
-        <div className='w-[100%] bg-[black]  ' >
+        {/* <div className='w-[100%] bg-[black]  ' >
            <h1 className='text-[white] text-[50px] font-bold ml-[20px]' >Tech Skills</h1>
        <AnimatedProfessionalSkillBars/>
+        </div> */}
+        <div>
+          <SkillJourneyMap/>
         </div>
 
 

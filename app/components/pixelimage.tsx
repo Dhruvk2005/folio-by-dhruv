@@ -3,7 +3,7 @@ import { PixelatedCanvas } from "./pixelated-canvas";
 
 export function PixelatedCanvasDemo() {
   return (
-    <div className="mx-auto absolute right-0 z-10 top-35 mr-[30px]">
+    <div className="mx-auto absolute right-0 z-10 top-[155px] mr-[30px]">
       <PixelatedCanvas
         src="./Dhruv.jpg"
         width={400}
