@@ -9,6 +9,8 @@ import { PixelatedCanvasDemo } from '../components/pixelimage'
 
 import SkillJourneyMap from '../components/SkillJourneyMap'
 import { Resumebutton } from '../components/resumebutton'
+import { TimelineDemo } from '../components/aboutusscroll'
+
 const Mainscreen = () => {
   return (
     <div>
@@ -48,7 +50,13 @@ const Mainscreen = () => {
           <HeroParallaxDemo />
         </div>
 
-        <div>
+        <div className='' >
+           
+          <TimelineDemo/>
+        
+        </div>
+
+        <div className='' >
           <SkillJourneyMap/>
         </div>
 
