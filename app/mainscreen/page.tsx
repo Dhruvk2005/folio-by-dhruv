@@ -13,14 +13,14 @@ import { TimelineDemo } from '../components/aboutusscroll'
 
 const Mainscreen = () => {
   return (
-    <div>
+    <div className='' >
       <div style={{ width: '100%', height: '700px', position: 'relative' }}>
         <Navbar />
         {/* <ProfileCard/> */}
         <div className='flex w-[100%] bg-[red] absolute z-10   ' >
 
 
-          <div className='absolute z-10 mt-[200px] ml-[20px] ' >
+          <div className='absolute z-10 mt-[200px] ml-[20px]  ' >
             <h1 className=' text-[60px] text-[white] font-bold  ' >Hello</h1>
             <h1 className=' text-[60px] text-[white] font-bold -mt-[10px] ' >I'm Dhruv Khade</h1>
            
