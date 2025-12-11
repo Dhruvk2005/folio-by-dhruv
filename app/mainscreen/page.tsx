@@ -10,6 +10,7 @@ import { PixelatedCanvasDemo } from '../components/pixelimage'
 import SkillJourneyMap from '../components/SkillJourneyMap'
 import { Resumebutton } from '../components/resumebutton'
 import { TimelineDemo } from '../components/aboutusscroll'
+import Appreciationpage from '../components/appreciation'
 
 const Mainscreen = () => {
   return (
@@ -58,6 +59,10 @@ const Mainscreen = () => {
 
         <div className='' >
           <SkillJourneyMap/>
+        </div>
+
+        <div>
+          <Appreciationpage/>
         </div>
 
 

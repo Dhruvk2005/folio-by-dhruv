@@ -50,7 +50,7 @@ const ProfessionalSkillMap: React.FC = () => {
         }} className="w-full p-8 ">
             <div className="mb-8">
                 <h1 className="text-6xl font-bold text-white mb-2">Technical Skills Journey</h1>
-                <p className="text-gray-400 ml-[10px]">Interactive skill map showing proficiency levels across different technologies</p>
+                <p className="text-[grey] ml-[10px]">Interactive skill map showing proficiency levels across different technologies</p>
             </div>
 
             <div className="relative">
