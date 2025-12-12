@@ -11,6 +11,7 @@ import SkillJourneyMap from '../components/SkillJourneyMap'
 import { Resumebutton } from '../components/resumebutton'
 import { TimelineDemo } from '../components/aboutusscroll'
 import Appreciationpage from '../components/appreciation'
+import { LaserFlowBoxExample } from '../components/uselaser'
 
 const Mainscreen = () => {
   return (
@@ -22,8 +23,8 @@ const Mainscreen = () => {
 
 
           <div className='absolute z-10 mt-[200px] ml-[20px]  ' >
-            <h1 className=' text-[60px] text-[white] font-bold  ' >Hello</h1>
-            <h1 className=' text-[60px] text-[white] font-bold -mt-[10px] ' >I'm Dhruv Khade</h1>
+            <h1 className='text-[60px]  bg-clip-text text-[white] font-extrabold  ' >Hello</h1>
+            <h1 className='text-[60px]  bg-clip-text text-[white] font-extrabold  ' >I'm Dhruv Khade</h1>
            
             <LayoutTextFlipDemo />
              {/* <button className='p-[15px] bg-[white] ml-[4px] rounded-[10px] font-semibold mt-[10px] hover:scale-110 transition-all cursor-pointer ease-in-out duration-200 ' >Download Resume</button> */}
@@ -64,6 +65,10 @@ const Mainscreen = () => {
         <div>
           <Appreciationpage/>
         </div>
+        {/* <div>
+          <LaserFlowBoxExample/>
+
+        </div> */}
 
 
       </div>

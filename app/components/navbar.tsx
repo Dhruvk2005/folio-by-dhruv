@@ -11,7 +11,7 @@ const items = [
 const Navbar = () => {
     return (
 
-        <div className=' flex fixed justify-center items-center w-[100%] mt-[20px] absolute z-10 top-0 min-h-[80px]  ' >
+        <div className=' flex  justify-center items-center w-[100%] mt-[20px] fixed z-10 top-0 left-0 min-h-[80px]  ' >
             <div className=' flex justify-between items-center w-[100%] mx-[20px]  p-[10px] rounded-[50px] bg-white/10 backdrop-blur-md shadow-lg  md:w-[70%] lg:w-[60%] xl:w-[50%]  ' >
                 <div>
                     <p className='text-[white] text-[20px] ml-[10px]  font-bold ' >Dhruv</p>
