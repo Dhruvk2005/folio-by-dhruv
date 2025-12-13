@@ -41,7 +41,7 @@ export function LaserFlowBoxExample() {
       <LaserFlow
         horizontalBeamOffset={0.1}
         verticalBeamOffset={0.0}
-        color="#c2c0c1ff"
+        color="#f01281ff"
       />
       
       <div style={{
@@ -53,7 +53,7 @@ export function LaserFlowBoxExample() {
         height: '60%',
         backgroundColor: '#060010',
         borderRadius: '20px',
-        border: '2px solid #bdb6baff',
+        border: '2px solid #f00f8eff',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
