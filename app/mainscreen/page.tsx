@@ -11,7 +11,7 @@ import SkillJourneyMap from '../components/SkillJourneyMap'
 import { Resumebutton } from '../components/resumebutton'
 import { TimelineDemo } from '../components/aboutusscroll'
 import Appreciationpage from '../components/appreciation'
-import { LaserFlowBoxExample } from '../components/uselaser'
+// import { LaserFlowBoxExample } from '../components/uselaser'
 
 const Mainscreen = () => {
   return (
