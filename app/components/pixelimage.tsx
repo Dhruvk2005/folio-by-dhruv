@@ -3,7 +3,7 @@ import { PixelatedCanvas } from "./pixelated-canvas";
 
 export function PixelatedCanvasDemo() {
   return (
-    <div className="mx-auto absolute right-0 z-10  mr-[30px] top-[155px]  ">
+    <div className="mx-auto  absolute right-0 z-10  mr-[30px] top-[155px]  ">
       <PixelatedCanvas
         src="./Dhruv.jpg"
         width={400}
@@ -23,7 +23,7 @@ export function PixelatedCanvasDemo() {
         sampleAverage
         tintColor="#FFFFFF"
         tintStrength={0.2}
-        className="rounded-xl  border border-neutral-800 shadow-lg"
+        className="rounded-xl border border-neutral-800 shadow-lg hidden lg:flex "
       />
     </div>
   );
