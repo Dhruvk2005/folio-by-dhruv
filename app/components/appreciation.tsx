@@ -29,8 +29,8 @@ const Appreciationpage = () => {
 
 
   return (
-    <div className='w-[100%] py-[30px] bg-[black] ' >
-      <div className='text-[30px] text-[white] font-bold ml-[30px] md:text-[50px] lg:text-[60px] ' >
+    <div className='w-[100%]  py-[30px] bg-[black] ' >
+      <div className='text-[30px]  mt-[30px] text-[white] font-bold ml-[30px] md:text-[50px] lg:text-[60px] ' >
         Words of appreciation
         <p className='text-[15px] mt-[10px] text-[grey] font-normal ml-[5px]' >Feedback from clients who trusted my work.</p>
         <p className='text-[15px] text-[grey] font-normal ml-[5px]' >you can check on https://www.fiverr.com/dhruv_khade?public_mode=true</p>
@@ -53,7 +53,7 @@ const Appreciationpage = () => {
 
         ))}
       </div>
-
+<div className="w-[100%] mt-[100px] h-px bg-gray-400 animate-pulse" />
     </div>
   )
 }

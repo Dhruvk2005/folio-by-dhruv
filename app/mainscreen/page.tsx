@@ -11,9 +11,20 @@ import SkillJourneyMap from '../components/SkillJourneyMap'
 import { Resumebutton } from '../components/resumebutton'
 import { TimelineDemo } from '../components/aboutusscroll'
 import Appreciationpage from '../components/appreciation'
+import { CarouselContext } from '../components/apple-cards-carousel'
+import { AppleCardsCarouselDemo } from '../components/realproject'
+import { ConnectFooter } from '../components/connect'
 // import { LaserFlowBoxExample } from '../components/uselaser'
 
 const Mainscreen = () => {
+  const myProjects = [
+  {
+    title: "Your Project Name",
+    link: "https://your-project.com",
+    thumbnail: "https://your-image.jpg",
+  },
+  // Add 15 projects for best effect
+];
   return (
     <div className='' >
       <div style={{ width: '100%', height: '700px', position: 'relative' }}>
@@ -50,6 +61,8 @@ const Mainscreen = () => {
 
         <div className='  '  >
           <HeroParallaxDemo />
+         {/* <AppleCardsCarouselDemo/> */}
+
         </div>
 
         <div className='' >
@@ -65,10 +78,10 @@ const Mainscreen = () => {
         <div>
           <Appreciationpage/>
         </div>
-        {/* <div>
-          <LaserFlowBoxExample/>
+        <div>
+          <ConnectFooter/>
 
-        </div> */}
+        </div>
 
 
       </div>
