@@ -11,7 +11,7 @@ export function AppleCardsCarouselDemo() {
   return (
     <div className="w-full h-full  bg-[linear-gradient(90deg,#0b0b0b_0%,#1a1a1a_20%,#0e0e0e_40%,#2a2a2a_55%,#0a0a0a_70%,#151515_85%,#050505_100%)] py-20">
       <h2 className="max-w-7xl pl-4 mx-auto text-xl md:text-5xl font-bold text-[white] font-sans">
-        Get to know your iSad.
+        My Projects
       </h2>
       <Carousel items={cards} />
     </div>
@@ -52,26 +52,26 @@ const DummyContent = () => {
 
 const data = [
   {
-    category: "Artificial Intelligence",
-    title: "You can do more with AI.",
-    src: "https://images.unsplash.com/photo-1593508512255-86ab42a8e620?q=80&w=3556&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    category: "",
+    title: " ",
+    src: "./p1.png",
     content: <DummyContent />,
   },
   {
-    category: "Productivity",
+    category: "CROOSE AI",
     title: "Enhance your productivity.",
-    src: "https://images.unsplash.com/photo-1531554694128-c4c6665f59c2?q=80&w=3387&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    src: "./p2.png",
     content: <DummyContent />,
   },
   {
-    category: "Product",
+    category: "Ordiio",
     title: "Launching the new Apple Vision Pro.",
     src: "https://images.unsplash.com/photo-1713869791518-a770879e60dc?q=80&w=2333&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     content: <DummyContent />,
   },
 
   {
-    category: "Product",
+    category: "Penguin Fashion",
     title: "Maps for your iPhone 15 Pro Max.",
     src: "https://images.unsplash.com/photo-1599202860130-f600f4948364?q=80&w=2515&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     content: <DummyContent />,

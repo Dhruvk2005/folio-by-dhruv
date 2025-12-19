@@ -46,14 +46,16 @@
 
 import React from 'react'
 import { Icon } from "@iconify/react";
+import Link from 'next/link'
+
 
 export const ConnectFooter = () => {
   return (
     <div className="w-full min-h-[600px] flex flex-col items-center bg-black text-white px-4 sm:px-6">
-      
+
       {/* TOP SECTION */}
       <div className="w-full max-w-[1200px] mt-[80px] flex flex-col lg:flex-row justify-between  gap-10">
-        
+
         {/* LEFT */}
         <div>
           <ul>
@@ -79,7 +81,7 @@ export const ConnectFooter = () => {
 
       {/* MIDDLE SECTION */}
       <div className="w-full max-w-[1200px] flex flex-col lg:flex-row justify-between gap-10 mt-14">
-        
+
         {/* DESCRIPTION */}
         <div className="text-[grey] text-[16px] sm:text-[18px] lg:text-[20px] lg:w-[50%]">
           Want to chat design, products, anything digital or just grab
@@ -87,25 +89,24 @@ export const ConnectFooter = () => {
         </div>
 
         {/* SOCIALS */}
-        <div className=' ' >
+        <div className='' >
           <h1 className="text-[grey] text-[16px] sm:text-[18px]">
             FOLLOW ME
           </h1>
 
-          <ul className="flex gap-4 mt-5">
-            {[
-              "mdi:instagram",
-              "mdi:linkedin",
-              "mdi:github",
-            ].map((icon) => (
-              <li
-                key={icon}
-                className="cursor-pointer border-2 p-2 border-[grey] rounded-xl
-                           hover:border-white transition"
-              >
-                <Icon icon={icon} width="22" height="22" color="white" />
-              </li>
-            ))}
+          <ul className='flex gap-[20px] mt-[20px] ' >
+
+
+
+            <Link href={'https://www.instagram.com/dhruv_khade/'} >
+              <li className='hover:cursor-pointer border-[2px] p-[7px] border-[grey] rounded-[10px] hover:border-[white] ' ><Icon icon="mdi:instagram" width="24" height="24" style={{ color: "#ffffff" }} /></li>
+            </Link>
+            <Link href={'https://www.linkedin.com/in/dhruv-khade-26779b281/'} >
+              <li className='hover:cursor-pointer border-[2px] p-[7px] border-[grey] rounded-[10px] hover:border-[white]' ><Icon icon="mdi:linkedin" width="24" height="24" style={{ color: "#ffffffff" }} /></li>
+            </Link>
+            <Link href={'https://github.com/Dhruvk2005'} >
+              <li className='hover:cursor-pointer border-[2px] p-[7px] border-[grey] rounded-[10px] hover:border-[white]' ><Icon icon="mdi:github" width="24" height="24" style={{ color: "#ffffffff" }} /></li>
+            </Link>
           </ul>
         </div>
       </div>

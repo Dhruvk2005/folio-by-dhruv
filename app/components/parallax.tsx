@@ -10,13 +10,13 @@ export const products = [
     title: "Cognivue AI",
     link: "https://cognivue-ai.vercel.app",
     thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/moonbeam.png",
+      "./p1.png",
   },
   {
     title: "Cognivue AI",
     link: "https://cognivue-ai.vercel.app",
     thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/cursor.png",
+      "./p2.png",
   },
   {
     title: "Cognivue",

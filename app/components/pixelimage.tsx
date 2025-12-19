@@ -5,7 +5,7 @@ export function PixelatedCanvasDemo() {
   return (
     <div className="mx-auto  absolute right-0 z-10  mr-[30px] top-[155px]  ">
       <PixelatedCanvas
-        src="./Dhruv.jpg"
+        src="./dh2.jpeg"
         width={400}
         height={500}
         cellSize={3}

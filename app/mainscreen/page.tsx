@@ -6,7 +6,7 @@ import { EncryptedText } from '../components/ui/encrypted-text'
 import { HeroParallaxDemo } from '../components/parallax'
 import { LayoutTextFlipDemo } from '../components/herotext'
 import { PixelatedCanvasDemo } from '../components/pixelimage'
-
+import { motion } from 'framer-motion'
 import SkillJourneyMap from '../components/SkillJourneyMap'
 import { Resumebutton } from '../components/resumebutton'
 import { TimelineDemo } from '../components/aboutusscroll'
