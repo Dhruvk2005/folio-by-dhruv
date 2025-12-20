@@ -21,38 +21,111 @@ export function AppleCardsCarouselDemo() {
 const DummyContent = () => {
   return (
     <>
-      {[...new Array(3).fill(1)].map((_, index) => {
-        return (
-          <div
-            key={"dummy-content" + index}
-            className="bg-[#F5F5F7] dark:bg-neutral-800 p-8 md:p-14 rounded-3xl mb-4"
-          >
-            <p className="text-neutral-600 dark:text-neutral-400 text-base md:text-2xl font-sans max-w-3xl mx-auto">
-              <span className="font-bold text-neutral-700 dark:text-neutral-200">
-                The first rule of Apple club is that you boast about Apple club.
-              </span>{" "}
-              Keep a journal, quickly jot down a grocery list, and take amazing
-              class notes. Want to convert those notes to text? No problem.
-              Langotiya jeetu ka mara hua yaar is ready to capture every
-              thought.
+
+
+      <div
+        key="cognivue-ai-content"
+        className="bg-black p-8 md:p-14 rounded-3xl mb-4 border border-white/10"
+      >
+        {/* TITLE */}
+        <h2 className="text-3xl md:text-4xl font-bold text-white text-center">
+          Cognivue AI
+        </h2>
+
+        {/* SHORT TAGLINE */}
+        <p className="text-neutral-400 text-center mt-3 max-w-3xl mx-auto">
+          An AI-powered platform that analyzes raw data and delivers actionable
+          insights in seconds.
+        </p>
+
+        {/* PROJECT IMAGE */}
+        <div className="mt-10 flex justify-center">
+          <img
+            src="./p1.png"
+            alt="Cognivue AI Dashboard"
+            className="w-full md:w-4/5 h-auto object-contain rounded-xl"
+          />
+        </div>
+
+        {/* INFO GRID */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mt-14">
+
+          {/* OVERVIEW */}
+          <div>
+            <h3 className="text-xl font-semibold text-white mb-2">Overview</h3>
+            <p className="text-neutral-400 leading-relaxed">
+              Cognivue AI is a personal project focused on transforming complex and
+              unstructured data into meaningful insights using artificial
+              intelligence. The platform is designed for speed, clarity, and
+              real-world usability.
             </p>
-            <img
-              src="https://assets.aceternity.com/macbook.png"
-              alt="Macbook mockup from Aceternity UI"
-              height="500"
-              width="500"
-              className="md:w-1/2 md:h-1/2 h-full w-full mx-auto object-contain"
-            />
           </div>
-        );
-      })}
+
+          {/* PURPOSE */}
+          <div>
+            <h3 className="text-xl font-semibold text-white mb-2">Purpose</h3>
+            <p className="text-neutral-400 leading-relaxed">
+              The goal of this project was to build an AI-driven solution that reduces
+              manual data analysis time and helps users make faster, data-backed
+              decisions without technical expertise.
+            </p>
+          </div>
+
+          {/* MY ROLE */}
+          <div>
+            <h3 className="text-xl font-semibold text-white mb-2">My Role</h3>
+            <p className="text-neutral-400 leading-relaxed">
+              I designed and developed the entire application end-to-end, including
+              UI/UX, frontend architecture, AI logic integration, and performance
+              optimization.
+            </p>
+          </div>
+
+          {/* TIMELINE */}
+          <div>
+            <h3 className="text-xl font-semibold text-white mb-2">Timeline</h3>
+            <p className="text-neutral-400 leading-relaxed">
+              Concept → Design → Development → Testing completed over a span of
+              <span className="text-white font-medium"> 6–8 weeks</span>.
+            </p>
+          </div>
+
+          {/* TECHNOLOGY */}
+          <div>
+            <h3 className="text-xl font-semibold text-white mb-2">
+              Technologies Used
+            </h3>
+            <ul className="text-neutral-400 space-y-1 list-disc list-inside">
+              <li>React & Next.js</li>
+              <li>Tailwind CSS</li>
+              <li>AI / ML APIs</li>
+              <li>Node.js</li>
+              <li>REST APIs</li>
+            </ul>
+          </div>
+
+          {/* KEY FEATURES */}
+          <div>
+            <h3 className="text-xl font-semibold text-white mb-2">Key Features</h3>
+            <ul className="text-neutral-400 space-y-1 list-disc list-inside">
+              <li>Real-time AI data analysis</li>
+              <li>Clean and intuitive dashboard</li>
+              <li>Scalable architecture</li>
+              <li>Fast response and optimized performance</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+
+
     </>
   );
 };
 
 const data = [
   {
-    category: "",
+    category: "Cognivue AI",
     title: " ",
     src: "./p1.png",
     content: <DummyContent />,
@@ -66,14 +139,14 @@ const data = [
   {
     category: "Ordiio",
     title: "Launching the new Apple Vision Pro.",
-    src: "https://images.unsplash.com/photo-1713869791518-a770879e60dc?q=80&w=2333&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    src: "./p4.png",
     content: <DummyContent />,
   },
 
   {
     category: "Penguin Fashion",
     title: "Maps for your iPhone 15 Pro Max.",
-    src: "https://images.unsplash.com/photo-1599202860130-f600f4948364?q=80&w=2515&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    src: "./p5.png",
     content: <DummyContent />,
   },
   {

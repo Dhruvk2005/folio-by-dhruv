@@ -61,7 +61,7 @@ const Mainscreen = () => {
 
         <div className='  '  >
           <HeroParallaxDemo />
-         {/* <AppleCardsCarouselDemo/> */}
+         <AppleCardsCarouselDemo/>
 
         </div>
 
