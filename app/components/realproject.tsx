@@ -60,8 +60,12 @@ const ProjectContent = ({ project }:any) => {
           </ul>
         </div>
 
+        <div>
+         {project.link}
+        </div>
+
       </div>
-    </div>
+    </div>  
   );
 };
 
@@ -87,7 +91,7 @@ const projects = [
     purpose:
       "The goal of this project was to build an AI-driven solution that reduces manual data analysis time and helps users make faster, data-backed decisions without technical expertise.",
     Timeline: "6–8 weeks",
-    Myrole:" I designed and developed the entire application end-to-end, including UI/UX, frontend architecture, AI logic integration, and performance optimization.",
+    Myrole:" I designed and developed the entire application end-to-end, including UI/UX, frontend architecture, backend, AI logic integration, and performance optimization.",
     Technology: [
       "React",
       "Next.js",
@@ -101,30 +105,35 @@ const projects = [
       "Scalable architecture",
       "Optimized performance",
     ],
+    link:"https://dhruvportfolio-lovat.vercel.app/",
   },
   {
     Title: "CROOSE AI",
     Description: "An AI assistant designed to enhance daily productivity.",
     src: "./p2.png",
     overview:
-      "CROOSE AI helps automate repetitive tasks and streamline daily workflows.",
+      "CROOSE is an intelligent WhatsApp business automation platform designed for small businesses. It combines booking management, payment processing, customer communication, and inventory tracking into a single, unified system. Think of it as your AI-powered business assistant that operates 24/7 on WhatsApp, delivering a seamless and professional experience to your customers while you focus on growing your business.",
     purpose:
-      "To improve productivity using AI-driven task automation and smart prompts.",
-    Timeline: "4 weeks",
-    Technology: ["React", "Tailwind CSS", "OpenAI API"],
-    features: ["Smart task automation", "Context-aware prompts"],
+      "The purpose of JoinCroose is to help businesses build stronger customer relationships through intelligent, real-time communication. By combining AI-powered chats, broadcast messaging, and smart automation, Croose enables teams to engage customers faster, personalize interactions at scale, and turn conversations into measurable growth.",
+    Timeline: "Code in progress. This project is started from june and team is still working on it.",
+    Myrole:"I contributed to the frontend development of the web application, focusing on building a responsive, high-performance user interface that delivers a seamless user experience. My work involved translating product requirements and design concepts into clean, scalable, and reusable UI components. I collaborated closely with the product and backend teams to integrate real-time data, APIs, and AI-driven features into the frontend, ensuring smooth interactions and consistent performance across devices and browsers. Special attention was given to performance optimization, accessibility, and maintaining a modern, intuitive design system.",
+    Technology: ["Nextjs",'REST APIs',"Tailwind CSS", "PostgreSQL",'PHP',"AI technology"],
+    features: ["Engage customers instantly with smart, AI-powered conversations that feel natural, personalized, and human—24/7.", "Send targeted announcements, offers, and updates to thousands of users at once without losing personalization.",'Automate replies, follow-ups, and workflows to reduce response time and scale customer support effortlessly.','Organize and prioritize conversations with filters, tags, and AI-assisted summaries.','Built for high-performance, real-time communication that scales with your business.'],
+    link:"",
   },
   {
     Title: "Ordiio",
     Description: "A modern ordering platform with seamless UX.",
     src: "./p4.png",
     overview:
-      "Ordiio simplifies digital ordering with a fast and intuitive interface.",
+      "Ordiio is the first sync licensing platform built specifically for creators, filmmakers, agencies, media networks, and brands seeking afro-leaning music and sounds for their projects. The platform provides a curated catalog of high-quality tracks, each fully cleared for commercial use—eliminating licensing complexity and legal uncertainty Designed to support modern storytelling, Ordiio makes it easy to discover, license, and use authentic afro-inspired music across films, advertisements, digital content, and branded media. By combining cultural depth with a streamlined licensing experience, Ordiio empowers creators to focus on creativity while ensuring every track is safe, legal, and production-ready.",
     purpose:
-      "To deliver a frictionless ordering experience across devices.",
-    Timeline: "5 weeks",
-    Technology: ["Next.js", "Tailwind CSS", "REST APIs"],
-    features: ["Fast checkout", "Mobile-first design"],
+      "The purpose of Ordiio is to make afro-leaning music easily accessible and legally safe for creators and brands worldwide. By offering a curated library of commercially cleared tracks, Ordiio removes the complexity, risk, and time traditionally associated with music licensing. Ordiio exists to empower storytellers—filmmakers, agencies, media networks, and digital creators—to confidently use authentic sounds that elevate their projects, while supporting artists through fair and transparent licensing.",
+    Timeline: "It is all in progress.",
+    Myrole:"I contributed to the frontend development of the web application, focusing on building a responsive, high-performance user interface that delivers a seamless user experience. My work involved translating product requirements and design concepts into clean, scalable, and reusable UI components. I collaborated closely with the product and backend teams to integrate real-time data, APIs, and AI-driven features into the frontend, ensuring smooth interactions and consistent performance across devices and browsers. Special attention was given to performance optimization, accessibility, and maintaining a modern, intuitive design system.",
+    Technology: ["Next.js", "Tailwind CSS", "REST APIs",'PostgreSQL','Modern AI technology for Muse AI'],
+    features: ["Fast checkoutA curated library of high-quality afro-inspired tracks and sounds tailored for modern storytelling.", "Every track is pre-licensed and legally cleared, removing copyright risk and licensing complexity.",'Search and filter music by mood, tempo, genre, and use-case to quickly find the perfect sound.','License tracks instantly with a simple, transparent process—no back-and-forth or legal delays.','Optimized for filmmakers, agencies, media networks, and brands producing commercial content.'],
+    link:"",
   },
 ];
 
