@@ -13,7 +13,7 @@ const LightSwitchCard: React.FC = () => {
         {isOn && (
           <>
             <div
-              className="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,_rgba(251,191,36,0.15),transparent_60%)] pointer-events-none"
+              className="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,_rgba(192,192,192,0.15),transparent_60%)] pointer-events-none"
               style={{
                 animation: 'fadeIn 0.5s ease-out'
               }}
@@ -23,7 +23,7 @@ const LightSwitchCard: React.FC = () => {
             <div
               className="absolute top-[25%] w-[600px] h-[600px] pointer-events-none"
               style={{
-                background: 'radial-gradient(ellipse at center, rgba(251, 191, 36, 0.2) 0%, transparent 70%)',
+                background: 'radial-gradient(ellipse at center, rgba(192, 192, 192, 0.2) 0%, transparent 70%)',
                 animation: 'pulse 3s ease-in-out infinite'
               }}
             />
@@ -41,7 +41,7 @@ const LightSwitchCard: React.FC = () => {
               return (
                 <div
                   key={i}
-                  className="absolute w-1.5 h-1.5 bg-amber-300 rounded-full blur-[1px]"
+                  className="absolute w-1.5 h-1.5 bg-gray-300 rounded-full blur-[1px]"
                   style={{
                     left: startX,
                     bottom: 0,
@@ -60,7 +60,7 @@ const LightSwitchCard: React.FC = () => {
         <div
           className={`absolute top-8 w-[2px] h-[180px] origin-top transition-all duration-500 ${
             isOn 
-              ? "bg-gradient-to-b from-neutral-700 via-amber-900/30 to-amber-600 shadow-[0_0_8px_rgba(251,191,36,0.4)]" 
+              ? "bg-gradient-to-b from-neutral-700 via-gray-600/30 to-gray-400 shadow-[0_0_8px_rgba(192,192,192,0.4)]" 
               : "bg-gradient-to-b from-neutral-700 to-neutral-800"
           }`}
         />
@@ -69,7 +69,7 @@ const LightSwitchCard: React.FC = () => {
         <div className="relative z-20 flex flex-col items-center">
           {/* Lamp shade/housing */}
           <div className={`relative w-32 h-24 transition-all duration-700 ${
-            isOn ? "drop-shadow-[0_0_25px_rgba(251,191,36,0.6)]" : ""
+            isOn ? "drop-shadow-[0_0_25px_rgba(192,192,192,0.6)]" : ""
           }`}>
             {/* Top cap */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-3 bg-gradient-to-b from-neutral-700 to-neutral-800 rounded-t-lg" />
@@ -78,20 +78,20 @@ const LightSwitchCard: React.FC = () => {
             <div 
               className={`absolute top-3 w-full h-20 transition-all duration-700 ${
                 isOn 
-                  ? "bg-gradient-to-b from-amber-100 via-amber-50 to-white/90" 
+                  ? "bg-gradient-to-b from-gray-100 via-gray-50 to-white/90" 
                   : "bg-gradient-to-b from-neutral-800 via-neutral-900 to-black"
               }`}
               style={{
                 clipPath: "polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%)",
                 boxShadow: isOn 
-                  ? "inset 0 -10px 30px rgba(251, 191, 36, 0.5), 0 10px 50px rgba(251, 191, 36, 0.3)"
+                  ? "inset 0 -10px 30px rgba(192, 192, 192, 0.5), 0 10px 50px rgba(192, 192, 192, 0.3)"
                   : "inset 0 -5px 15px rgba(0, 0, 0, 0.8)"
               }}
             >
               {/* Inner glow */}
               {isOn && (
                 <div
-                  className="absolute inset-0 bg-gradient-to-b from-amber-200 to-transparent"
+                  className="absolute inset-0 bg-gradient-to-b from-gray-200 to-transparent"
                   style={{
                     clipPath: "polygon(25% 5%, 75% 5%, 95% 95%, 5% 95%)",
                     animation: 'pulse 2s ease-in-out infinite'
@@ -104,13 +104,13 @@ const LightSwitchCard: React.FC = () => {
             {isOn && (
               <>
                 <div
-                  className="absolute top-8 left-1/2 -translate-x-1/2 w-12 h-12 bg-amber-300/80 rounded-full blur-xl"
+                  className="absolute top-8 left-1/2 -translate-x-1/2 w-12 h-12 bg-gray-300/80 rounded-full blur-xl"
                   style={{
                     animation: 'bulbPulse 2s ease-in-out infinite'
                   }}
                 />
                 <div
-                  className="absolute top-10 left-1/2 -translate-x-1/2 w-8 h-8 bg-yellow-200 rounded-full blur-md"
+                  className="absolute top-10 left-1/2 -translate-x-1/2 w-8 h-8 bg-gray-100 rounded-full blur-md"
                   style={{
                     animation: 'bulbPulseSmall 1.5s ease-in-out infinite'
                   }}
@@ -136,14 +136,14 @@ const LightSwitchCard: React.FC = () => {
                 hover:scale-110 hover:-translate-y-0.5
                 active:scale-95 active:translate-y-1
                 ${isOn 
-                  ? "bg-gradient-to-b from-amber-400 via-amber-300 to-amber-500 shadow-[0_0_20px_rgba(251,191,36,0.7)]" 
+                  ? "bg-gradient-to-b from-gray-400 via-gray-300 to-gray-500 shadow-[0_0_20px_rgba(192,192,192,0.7)]" 
                   : "bg-gradient-to-b from-neutral-600 via-neutral-700 to-neutral-800 shadow-lg"}
-                border-2 ${isOn ? "border-amber-200" : "border-neutral-700"}
+                border-2 ${isOn ? "border-gray-200" : "border-neutral-700"}
               `}
             >
               {/* Shine effect */}
               <div className={`absolute top-1 left-1 w-3 h-3 rounded-full ${
-                isOn ? "bg-amber-100/60" : "bg-neutral-500/30"
+                isOn ? "bg-gray-100/60" : "bg-neutral-500/30"
               } blur-sm`} />
               
               {/* Ring detail */}
@@ -163,7 +163,7 @@ const LightSwitchCard: React.FC = () => {
         <div
           style={{
             boxShadow: isOn 
-              ? "0 0 60px rgba(251, 191, 36, 0.4), 0 20px 80px rgba(251, 191, 36, 0.2), 0 30px 100px rgba(0, 0, 0, 0.5)"
+              ? "0 0 60px rgba(192, 192, 192, 0.4), 0 20px 80px rgba(192, 192, 192, 0.2), 0 30px 100px rgba(0, 0, 0, 0.5)"
               : "0 20px 60px rgba(0, 0, 0, 0.9), 0 10px 30px rgba(0, 0, 0, 0.8)",
             transition: 'all 0.7s ease-out'
           }}
@@ -172,17 +172,17 @@ const LightSwitchCard: React.FC = () => {
             backdrop-blur-sm
             transition-all duration-700
             ${isOn
-              ? "bg-gradient-to-br from-amber-50/95 via-white/90 to-amber-100/80 text-neutral-900 border-2 border-amber-200/60"
+              ? "bg-gradient-to-br from-gray-50/95 via-white/90 to-gray-100/80 text-neutral-900 border-2 border-gray-200/60"
               : "bg-gradient-to-br from-neutral-950/80 via-black/90 to-neutral-950/80 text-neutral-600 border border-neutral-800/50"}
           `}
         >
           {/* Animated background pattern */}
           <div className="absolute inset-0 opacity-5">
             <div className={`absolute inset-0 transition-opacity duration-700 ${
-              isOn ? "opacity-100 bg-[radial-gradient(circle_at_30%_40%,_rgba(251,191,36,0.4)_0%,transparent_50%)]" : "opacity-0"
+              isOn ? "opacity-100 bg-[radial-gradient(circle_at_30%_40%,_rgba(192,192,192,0.4)_0%,transparent_50%)]" : "opacity-0"
             }`} />
             <div className={`absolute inset-0 transition-opacity duration-700 ${
-              isOn ? "opacity-100 bg-[radial-gradient(circle_at_70%_70%,_rgba(251,191,36,0.3)_0%,transparent_50%)]" : "opacity-0"
+              isOn ? "opacity-100 bg-[radial-gradient(circle_at_70%_70%,_rgba(192,192,192,0.3)_0%,transparent_50%)]" : "opacity-0"
             }`} />
           </div>
           
@@ -200,7 +200,7 @@ const LightSwitchCard: React.FC = () => {
                 <img
                   src="/dhruv.jpg"
                   alt="Dhruv"
-                  className="relative z-10 mx-auto h-36 w-36 rounded-full object-cover grayscale-0 ring-4 ring-amber-300/60 shadow-[0_0_40px_rgba(251,191,36,0.3)]"
+                  className="relative z-10 mx-auto h-36 w-36 rounded-full object-cover grayscale-0 ring-4 ring-gray-300/60 shadow-[0_0_40px_rgba(192,192,192,0.3)]"
                   style={{
                     animation: 'imageScale 3s ease-in-out infinite'
                   }}
@@ -208,13 +208,13 @@ const LightSwitchCard: React.FC = () => {
                 
                 {/* Rotating glow ring */}
                 <div
-                  className="absolute inset-0 rounded-full bg-gradient-conic from-amber-400 via-transparent via-transparent to-amber-300 blur-xl opacity-40"
+                  className="absolute inset-0 rounded-full bg-gradient-conic from-gray-400 via-transparent via-transparent to-gray-300 blur-xl opacity-40"
                   style={{
                     animation: 'spin 10s linear infinite'
                   }}
                 />
                 <div
-                  className="absolute inset-0 rounded-full bg-gradient-conic from-transparent via-amber-200 to-transparent blur-lg opacity-30"
+                  className="absolute inset-0 rounded-full bg-gradient-conic from-transparent via-gray-200 to-transparent blur-lg opacity-30"
                   style={{
                     animation: 'spinReverse 15s linear infinite'
                   }}
@@ -275,7 +275,7 @@ const LightSwitchCard: React.FC = () => {
               ].map((spark, i) => (
                 <div
                   key={i}
-                  className={`absolute ${spark.size} bg-amber-400 rounded-full shadow-lg shadow-amber-400/50`}
+                  className={`absolute ${spark.size} bg-gray-400 rounded-full shadow-lg shadow-gray-400/50`}
                   style={{ 
                     top: spark.top, 
                     right: spark.right, 
