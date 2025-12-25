@@ -61,6 +61,8 @@ export default function SkiperPerspectiveText() {
             <br />
             Design meets engineering.
 
+            
+
             {/* Fade bottom */}
             <div className="pointer-events-none absolute bottom-0 left-0 h-[60vh] w-full bg-gradient-to-b from-transparent to-[#f5f4f3]" />
           </motion.div>

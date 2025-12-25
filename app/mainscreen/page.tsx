@@ -15,6 +15,7 @@ import { CarouselContext } from '../components/apple-cards-carousel'
 import { AppleCardsCarouselDemo } from '../components/realproject'
 import { ConnectFooter } from '../components/connect'
 import PerspectiveScrollText from '../components/PerspectiveScrollText'
+import LightSwitchCard from '../components/LightSwitchCard'
 // import { LaserFlowBoxExample } from '../components/uselaser'
 
 const Mainscreen = () => {
@@ -63,6 +64,7 @@ const Mainscreen = () => {
         <div className='  '  >
           {/* <HeroParallaxDemo /> */}
           {/* <PerspectiveScrollText/> */}
+          <LightSwitchCard/>
          <AppleCardsCarouselDemo/>
 
         </div>
