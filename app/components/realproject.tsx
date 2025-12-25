@@ -3,23 +3,39 @@
 import React from "react";
 import { Carousel, Card } from "./apple-cards-carousel";
 
+/* ---------------------------------------
+   TYPES
+---------------------------------------- */
 
+interface Project {
+  Title: string;
+  Description: string;
+  src: string;
+  overview: string;
+  purpose: string;
+  Timeline: string;
+  Myrole: string;
+  Technology: string[];
+  features: string[];
+  link: string;
+}
 
-const ProjectContent = ({ project }:any) => {
+/* ---------------------------------------
+   PROJECT CONTENT COMPONENT
+---------------------------------------- */
+
+const ProjectContent = ({ project }: { project: Project }) => {
   return (
     <div className="bg-black p-8 md:p-14 rounded-3xl mb-4 border border-white/10">
 
-      {/* TITLE */}
       <h2 className="text-3xl md:text-4xl font-bold text-white text-center">
         {project.Title}
       </h2>
 
-      {/* TAGLINE */}
       <p className="text-neutral-400 text-center mt-3 max-w-3xl mx-auto">
         {project.Description}
       </p>
 
-      {/* IMAGE */}
       <div className="mt-10 flex justify-center">
         <img
           src={project.src}
@@ -28,48 +44,51 @@ const ProjectContent = ({ project }:any) => {
         />
       </div>
 
-      {/* DETAILS GRID */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mt-14">
-
-        <Section title="Overview" text={project.overview} />  
+        <Section title="Overview" text={project.overview} />
         <Section title="Purpose" text={project.purpose} />
-         <Section title="My role" text={project.Myrole} />
+        <Section title="My Role" text={project.Myrole} />
         <Section title="Timeline" text={project.Timeline} />
 
-        {/* TECHNOLOGIES */}
         <div>
           <h3 className="text-xl font-semibold text-white mb-2">
             Technologies Used
           </h3>
           <ul className="text-neutral-400 space-y-1 list-disc list-inside">
-            {project.Technology.map((tech:any, i:any) => (
+            {project.Technology.map((tech, i) => (
               <li key={i}>{tech}</li>
             ))}
           </ul>
         </div>
 
-        {/* FEATURES */}
         <div>
           <h3 className="text-xl font-semibold text-white mb-2">
             Key Features
           </h3>
           <ul className="text-neutral-400 space-y-1 list-disc list-inside">
-            {project.features.map((feature:any, i:any) => (
+            {project.features.map((feature, i) => (
               <li key={i}>{feature}</li>
             ))}
           </ul>
         </div>
 
-        <div>
-         {project.link}
-        </div>
-
+        {project.link && (
+          <div className="col-span-full text-center mt-6">
+            <a
+              href={project.link}
+              target="_blank"
+              className="text-blue-400 underline"
+            >
+              Visit Project
+            </a>
+          </div>
+        )}
       </div>
-    </div>  
+    </div>
   );
 };
 
-const Section = ({ title, text }:any) => (
+const Section = ({ title, text }: { title: string; text: string }) => (
   <div>
     <h3 className="text-xl font-semibold text-white mb-2">{title}</h3>
     <p className="text-neutral-400 leading-relaxed">{text}</p>
@@ -77,9 +96,8 @@ const Section = ({ title, text }:any) => (
 );
 
 /* ---------------------------------------
-   PROJECT DATA (SINGLE SOURCE OF TRUTH)
+   PROJECT DATA
 ---------------------------------------- */
-
 const projects = [
   {
     Title: "Cognivue AI",
@@ -105,7 +123,7 @@ const projects = [
       "Scalable architecture",
       "Optimized performance",
     ],
-    link:"https://dhruvportfolio-lovat.vercel.app/",
+    link:"https://cognivue-ai.vercel.app/",
   },
   {
     Title: "CROOSE AI",
@@ -119,7 +137,7 @@ const projects = [
     Myrole:"I contributed to the frontend development of the web application, focusing on building a responsive, high-performance user interface that delivers a seamless user experience. My work involved translating product requirements and design concepts into clean, scalable, and reusable UI components. I collaborated closely with the product and backend teams to integrate real-time data, APIs, and AI-driven features into the frontend, ensuring smooth interactions and consistent performance across devices and browsers. Special attention was given to performance optimization, accessibility, and maintaining a modern, intuitive design system.",
     Technology: ["Nextjs",'REST APIs',"Tailwind CSS", "PostgreSQL",'PHP',"AI technology"],
     features: ["Engage customers instantly with smart, AI-powered conversations that feel natural, personalized, and human—24/7.", "Send targeted announcements, offers, and updates to thousands of users at once without losing personalization.",'Automate replies, follow-ups, and workflows to reduce response time and scale customer support effortlessly.','Organize and prioritize conversations with filters, tags, and AI-assisted summaries.','Built for high-performance, real-time communication that scales with your business.'],
-    link:"",
+    link:"https://www.joincroose.com/",
   },
   {
     Title: "Ordiio",
@@ -133,17 +151,17 @@ const projects = [
     Myrole:"I contributed to the frontend development of the web application, focusing on building a responsive, high-performance user interface that delivers a seamless user experience. My work involved translating product requirements and design concepts into clean, scalable, and reusable UI components. I collaborated closely with the product and backend teams to integrate real-time data, APIs, and AI-driven features into the frontend, ensuring smooth interactions and consistent performance across devices and browsers. Special attention was given to performance optimization, accessibility, and maintaining a modern, intuitive design system.",
     Technology: ["Next.js", "Tailwind CSS", "REST APIs",'PostgreSQL','Modern AI technology for Muse AI'],
     features: ["Fast checkoutA curated library of high-quality afro-inspired tracks and sounds tailored for modern storytelling.", "Every track is pre-licensed and legally cleared, removing copyright risk and licensing complexity.",'Search and filter music by mood, tempo, genre, and use-case to quickly find the perfect sound.','License tracks instantly with a simple, transparent process—no back-and-forth or legal delays.','Optimized for filmmakers, agencies, media networks, and brands producing commercial content.'],
-    link:"",
+    link:"https://www.ordiio.com/",
   },
 ];
 
 /* ---------------------------------------
-   CAROUSEL DATA (CONNECTED PROPERLY)
+   CAROUSEL DATA (✅ FIXED)
 ---------------------------------------- */
 
 const data = projects.map((project) => ({
+  title: project.Title,      // ✅ REQUIRED BY Card
   category: project.Title,
-
   src: project.src,
   content: <ProjectContent project={project} />,
 }));
