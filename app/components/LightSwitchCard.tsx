@@ -247,7 +247,7 @@ const LightSwitchCard: React.FC = () => {
             }}
             className="text-4xl font-bold mb-3 relative z-10 tracking-tight"
           >
-            {isOn ? "Dhruv Patel" : "Turn on the light"}
+            {isOn ? "Dhruv Khade" : "Turn on the light"}
           </h1>
           
           <p
