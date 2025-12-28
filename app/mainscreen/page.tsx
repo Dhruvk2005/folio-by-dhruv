@@ -8,7 +8,7 @@ import { LayoutTextFlipDemo } from '../components/herotext'
 import { PixelatedCanvasDemo } from '../components/pixelimage'
 import { motion } from 'framer-motion'
 import SkillJourneyMap from '../components/SkillJourneyMap'
-import { Resumebutton } from '../components/resumebutton'
+import { ResumeButton } from '../components/resumebutton'
 import { TimelineDemo } from '../components/aboutusscroll'
 import Appreciationpage from '../components/appreciation'
 import { CarouselContext } from '../components/apple-cards-carousel'
@@ -41,7 +41,7 @@ const Mainscreen = () => {
            
             <LayoutTextFlipDemo />
              {/* <button className='p-[15px] bg-[white] ml-[4px] rounded-[10px] font-semibold mt-[10px] hover:scale-110 transition-all cursor-pointer ease-in-out duration-200 ' >Download Resume</button> */}
-             <button className='mt-[20px] ml-[4px] ' ><Resumebutton/></button>
+             <button className='mt-[20px] ml-[4px] ' ><ResumeButton/></button>
           </div>
           <div className='' >
             <PixelatedCanvasDemo />
