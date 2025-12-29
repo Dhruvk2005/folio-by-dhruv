@@ -198,7 +198,7 @@ const LightSwitchCard: React.FC = () => {
             {isOn ? (
               <>
                 <img
-                  src="/dhruv.jpg"
+                  src="./dhruv.jpg"
                   alt="Dhruv"
                   className="relative z-10 mx-auto h-36 w-36 rounded-full object-cover grayscale-0 ring-4 ring-gray-300/60 shadow-[0_0_40px_rgba(192,192,192,0.3)]"
                   style={{
