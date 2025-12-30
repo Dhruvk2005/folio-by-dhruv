@@ -19,6 +19,43 @@ import LightSwitchCard from '../components/LightSwitchCard'
 // import { LaserFlowBoxExample } from '../components/uselaser'
 
 const Mainscreen = () => {
+ const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.2,
+    },
+  },
+};
+
+const item = {
+  hidden: { opacity: 0, y: 30, filter: "blur(8px)" },
+  show: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: {
+      duration: 0.7,
+      ease: "easeOut",
+    },
+  },
+};
+
+const canvasAnim = {
+  hidden: { opacity: 0, scale: 0.98 },
+  show: {
+    opacity: 1,
+    scale: 1,
+    transition: {
+      duration: 1.2,
+      ease: "easeOut",
+    },
+  },
+};
+
+
   const myProjects = [
   {
     title: "Your Project Name",
@@ -32,7 +69,7 @@ const Mainscreen = () => {
       <div style={{ width: '100%', height: '700px', position: 'relative' }}>
         <Navbar />
         {/* <ProfileCard/> */}
-        <div className='flex w-[100%] bg-[red] absolute z-10   ' >
+        <div id='home' className='flex w-[100%] bg-[red] absolute z-10   ' >
 
 
           <div className='absolute z-10 mt-[200px] ml-[20px]  ' >
@@ -65,12 +102,16 @@ const Mainscreen = () => {
           {/* <HeroParallaxDemo /> */}
           {/* <PerspectiveScrollText/> */}
           <LightSwitchCard/>
+          <div id='projects' >
+
          <AppleCardsCarouselDemo/>
+
+          </div>
 
         </div>
 
-        <div className='' >
-           
+        <div id='aboutme' className='' >
+             
           <TimelineDemo/>
         
         </div>
@@ -82,7 +123,7 @@ const Mainscreen = () => {
         <div>
           <Appreciationpage/>
         </div>
-        <div>
+        <div id='connect' >
           <ConnectFooter/>
 
         </div>

@@ -26,12 +26,7 @@ export function ResumeButton() {
         <ModalBody className="mt-[100px]">
           <ModalContent className="relative flex flex-col items-center justify-center p-4 sm:p-6 bg-black/80 rounded-2xl backdrop-blur-md w-full max-w-[95vw] sm:max-w-[90vw] max-h-[90vh]">
 
-            {/* ❌ CLOSE BUTTON */}
-            <ModalTrigger className="absolute top-3 right-3 z-50 rounded-full bg-white/90 text-black w-9 h-9 flex items-center justify-center hover:bg-black transition">
-              ✕
-            </ModalTrigger>
-
-            {/* RESUME IMAGE */}
+         
             <img
               src="/myresume.png"
               alt="Resume Preview"
