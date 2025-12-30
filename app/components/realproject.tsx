@@ -153,6 +153,90 @@ const projects = [
     features: ["Fast checkoutA curated library of high-quality afro-inspired tracks and sounds tailored for modern storytelling.", "Every track is pre-licensed and legally cleared, removing copyright risk and licensing complexity.",'Search and filter music by mood, tempo, genre, and use-case to quickly find the perfect sound.','License tracks instantly with a simple, transparent process—no back-and-forth or legal delays.','Optimized for filmmakers, agencies, media networks, and brands producing commercial content.'],
     link:"https://www.ordiio.com/",
   },
+  {
+    Title: "Forecastify : Weather app",
+    Description: "A modern ordering platform with seamless UX.",
+    src: "./weather.png",
+    overview:
+      "Ordiio is the first sync licensing platform built specifically for creators, filmmakers, agencies, media networks, and brands seeking afro-leaning music and sounds for their projects. The platform provides a curated catalog of high-quality tracks, each fully cleared for commercial use—eliminating licensing complexity and legal uncertainty Designed to support modern storytelling, Ordiio makes it easy to discover, license, and use authentic afro-inspired music across films, advertisements, digital content, and branded media. By combining cultural depth with a streamlined licensing experience, Ordiio empowers creators to focus on creativity while ensuring every track is safe, legal, and production-ready.",
+    purpose:
+      "The purpose of Ordiio is to make afro-leaning music easily accessible and legally safe for creators and brands worldwide. By offering a curated library of commercially cleared tracks, Ordiio removes the complexity, risk, and time traditionally associated with music licensing. Ordiio exists to empower storytellers—filmmakers, agencies, media networks, and digital creators—to confidently use authentic sounds that elevate their projects, while supporting artists through fair and transparent licensing.",
+    Timeline: "It is all in progress.",
+    Myrole:"I contributed to the frontend development of the web application, focusing on building a responsive, high-performance user interface that delivers a seamless user experience. My work involved translating product requirements and design concepts into clean, scalable, and reusable UI components. I collaborated closely with the product and backend teams to integrate real-time data, APIs, and AI-driven features into the frontend, ensuring smooth interactions and consistent performance across devices and browsers. Special attention was given to performance optimization, accessibility, and maintaining a modern, intuitive design system.",
+    Technology: ["Next.js", "Tailwind CSS", "REST APIs",'PostgreSQL','Modern AI technology for Muse AI'],
+    features: ["Fast checkoutA curated library of high-quality afro-inspired tracks and sounds tailored for modern storytelling.", "Every track is pre-licensed and legally cleared, removing copyright risk and licensing complexity.",'Search and filter music by mood, tempo, genre, and use-case to quickly find the perfect sound.','License tracks instantly with a simple, transparent process—no back-and-forth or legal delays.','Optimized for filmmakers, agencies, media networks, and brands producing commercial content.'],
+    link:"https://www.ordiio.com/",
+  },
+  {
+    Title: "To-do list app",
+    Description: "A modern ordering platform with seamless UX.",
+    src: "./todo.png",
+    overview:
+      "Ordiio is the first sync licensing platform built specifically for creators, filmmakers, agencies, media networks, and brands seeking afro-leaning music and sounds for their projects. The platform provides a curated catalog of high-quality tracks, each fully cleared for commercial use—eliminating licensing complexity and legal uncertainty Designed to support modern storytelling, Ordiio makes it easy to discover, license, and use authentic afro-inspired music across films, advertisements, digital content, and branded media. By combining cultural depth with a streamlined licensing experience, Ordiio empowers creators to focus on creativity while ensuring every track is safe, legal, and production-ready.",
+    purpose:
+      "The purpose of Ordiio is to make afro-leaning music easily accessible and legally safe for creators and brands worldwide. By offering a curated library of commercially cleared tracks, Ordiio removes the complexity, risk, and time traditionally associated with music licensing. Ordiio exists to empower storytellers—filmmakers, agencies, media networks, and digital creators—to confidently use authentic sounds that elevate their projects, while supporting artists through fair and transparent licensing.",
+    Timeline: "It is all in progress.",
+    Myrole:"I contributed to the frontend development of the web application, focusing on building a responsive, high-performance user interface that delivers a seamless user experience. My work involved translating product requirements and design concepts into clean, scalable, and reusable UI components. I collaborated closely with the product and backend teams to integrate real-time data, APIs, and AI-driven features into the frontend, ensuring smooth interactions and consistent performance across devices and browsers. Special attention was given to performance optimization, accessibility, and maintaining a modern, intuitive design system.",
+    Technology: ["Next.js", "Tailwind CSS", "REST APIs",'PostgreSQL','Modern AI technology for Muse AI'],
+    features: ["Fast checkoutA curated library of high-quality afro-inspired tracks and sounds tailored for modern storytelling.", "Every track is pre-licensed and legally cleared, removing copyright risk and licensing complexity.",'Search and filter music by mood, tempo, genre, and use-case to quickly find the perfect sound.','License tracks instantly with a simple, transparent process—no back-and-forth or legal delays.','Optimized for filmmakers, agencies, media networks, and brands producing commercial content.'],
+    link:"https://www.ordiio.com/",
+  },
+  {
+    Title: "Pariksh : Quiz game",
+    Description: "A modern ordering platform with seamless UX.",
+    src: "./game.png",
+    overview:
+      "Ordiio is the first sync licensing platform built specifically for creators, filmmakers, agencies, media networks, and brands seeking afro-leaning music and sounds for their projects. The platform provides a curated catalog of high-quality tracks, each fully cleared for commercial use—eliminating licensing complexity and legal uncertainty Designed to support modern storytelling, Ordiio makes it easy to discover, license, and use authentic afro-inspired music across films, advertisements, digital content, and branded media. By combining cultural depth with a streamlined licensing experience, Ordiio empowers creators to focus on creativity while ensuring every track is safe, legal, and production-ready.",
+    purpose:
+      "The purpose of Ordiio is to make afro-leaning music easily accessible and legally safe for creators and brands worldwide. By offering a curated library of commercially cleared tracks, Ordiio removes the complexity, risk, and time traditionally associated with music licensing. Ordiio exists to empower storytellers—filmmakers, agencies, media networks, and digital creators—to confidently use authentic sounds that elevate their projects, while supporting artists through fair and transparent licensing.",
+    Timeline: "It is all in progress.",
+    Myrole:"I contributed to the frontend development of the web application, focusing on building a responsive, high-performance user interface that delivers a seamless user experience. My work involved translating product requirements and design concepts into clean, scalable, and reusable UI components. I collaborated closely with the product and backend teams to integrate real-time data, APIs, and AI-driven features into the frontend, ensuring smooth interactions and consistent performance across devices and browsers. Special attention was given to performance optimization, accessibility, and maintaining a modern, intuitive design system.",
+    Technology: ["Next.js", "Tailwind CSS", "REST APIs",'PostgreSQL','Modern AI technology for Muse AI'],
+    features: ["Fast checkoutA curated library of high-quality afro-inspired tracks and sounds tailored for modern storytelling.", "Every track is pre-licensed and legally cleared, removing copyright risk and licensing complexity.",'Search and filter music by mood, tempo, genre, and use-case to quickly find the perfect sound.','License tracks instantly with a simple, transparent process—no back-and-forth or legal delays.','Optimized for filmmakers, agencies, media networks, and brands producing commercial content.'],
+    link:"https://www.ordiio.com/",
+  },
+  {
+    Title: "Penguin fashion",
+    Description: "A modern ordering platform with seamless UX.",
+    src: "./p5.png",
+    overview:
+      "Ordiio is the first sync licensing platform built specifically for creators, filmmakers, agencies, media networks, and brands seeking afro-leaning music and sounds for their projects. The platform provides a curated catalog of high-quality tracks, each fully cleared for commercial use—eliminating licensing complexity and legal uncertainty Designed to support modern storytelling, Ordiio makes it easy to discover, license, and use authentic afro-inspired music across films, advertisements, digital content, and branded media. By combining cultural depth with a streamlined licensing experience, Ordiio empowers creators to focus on creativity while ensuring every track is safe, legal, and production-ready.",
+    purpose:
+      "The purpose of Ordiio is to make afro-leaning music easily accessible and legally safe for creators and brands worldwide. By offering a curated library of commercially cleared tracks, Ordiio removes the complexity, risk, and time traditionally associated with music licensing. Ordiio exists to empower storytellers—filmmakers, agencies, media networks, and digital creators—to confidently use authentic sounds that elevate their projects, while supporting artists through fair and transparent licensing.",
+    Timeline: "It is all in progress.",
+    Myrole:"I contributed to the frontend development of the web application, focusing on building a responsive, high-performance user interface that delivers a seamless user experience. My work involved translating product requirements and design concepts into clean, scalable, and reusable UI components. I collaborated closely with the product and backend teams to integrate real-time data, APIs, and AI-driven features into the frontend, ensuring smooth interactions and consistent performance across devices and browsers. Special attention was given to performance optimization, accessibility, and maintaining a modern, intuitive design system.",
+    Technology: ["Next.js", "Tailwind CSS", "REST APIs",'PostgreSQL','Modern AI technology for Muse AI'],
+    features: ["Fast checkoutA curated library of high-quality afro-inspired tracks and sounds tailored for modern storytelling.", "Every track is pre-licensed and legally cleared, removing copyright risk and licensing complexity.",'Search and filter music by mood, tempo, genre, and use-case to quickly find the perfect sound.','License tracks instantly with a simple, transparent process—no back-and-forth or legal delays.','Optimized for filmmakers, agencies, media networks, and brands producing commercial content.'],
+    link:"https://www.ordiio.com/",
+  },
+  {
+    Title: "Ultraedit",
+    Description: "A modern ordering platform with seamless UX.",
+    src: "./ultra.png",
+    overview:
+      "Ordiio is the first sync licensing platform built specifically for creators, filmmakers, agencies, media networks, and brands seeking afro-leaning music and sounds for their projects. The platform provides a curated catalog of high-quality tracks, each fully cleared for commercial use—eliminating licensing complexity and legal uncertainty Designed to support modern storytelling, Ordiio makes it easy to discover, license, and use authentic afro-inspired music across films, advertisements, digital content, and branded media. By combining cultural depth with a streamlined licensing experience, Ordiio empowers creators to focus on creativity while ensuring every track is safe, legal, and production-ready.",
+    purpose:
+      "The purpose of Ordiio is to make afro-leaning music easily accessible and legally safe for creators and brands worldwide. By offering a curated library of commercially cleared tracks, Ordiio removes the complexity, risk, and time traditionally associated with music licensing. Ordiio exists to empower storytellers—filmmakers, agencies, media networks, and digital creators—to confidently use authentic sounds that elevate their projects, while supporting artists through fair and transparent licensing.",
+    Timeline: "It is all in progress.",
+    Myrole:"I contributed to the frontend development of the web application, focusing on building a responsive, high-performance user interface that delivers a seamless user experience. My work involved translating product requirements and design concepts into clean, scalable, and reusable UI components. I collaborated closely with the product and backend teams to integrate real-time data, APIs, and AI-driven features into the frontend, ensuring smooth interactions and consistent performance across devices and browsers. Special attention was given to performance optimization, accessibility, and maintaining a modern, intuitive design system.",
+    Technology: ["Next.js", "Tailwind CSS", "REST APIs",'PostgreSQL','Modern AI technology for Muse AI'],
+    features: ["Fast checkoutA curated library of high-quality afro-inspired tracks and sounds tailored for modern storytelling.", "Every track is pre-licensed and legally cleared, removing copyright risk and licensing complexity.",'Search and filter music by mood, tempo, genre, and use-case to quickly find the perfect sound.','License tracks instantly with a simple, transparent process—no back-and-forth or legal delays.','Optimized for filmmakers, agencies, media networks, and brands producing commercial content.'],
+    link:"https://www.ordiio.com/",
+  },
+  {
+    Title: "Tic Tac Toe",
+    Description: "A modern ordering platform with seamless UX.",
+    src: "./tic.png",
+    overview:
+      "Ordiio is the first sync licensing platform built specifically for creators, filmmakers, agencies, media networks, and brands seeking afro-leaning music and sounds for their projects. The platform provides a curated catalog of high-quality tracks, each fully cleared for commercial use—eliminating licensing complexity and legal uncertainty Designed to support modern storytelling, Ordiio makes it easy to discover, license, and use authentic afro-inspired music across films, advertisements, digital content, and branded media. By combining cultural depth with a streamlined licensing experience, Ordiio empowers creators to focus on creativity while ensuring every track is safe, legal, and production-ready.",
+    purpose:
+      "The purpose of Ordiio is to make afro-leaning music easily accessible and legally safe for creators and brands worldwide. By offering a curated library of commercially cleared tracks, Ordiio removes the complexity, risk, and time traditionally associated with music licensing. Ordiio exists to empower storytellers—filmmakers, agencies, media networks, and digital creators—to confidently use authentic sounds that elevate their projects, while supporting artists through fair and transparent licensing.",
+    Timeline: "It is all in progress.",
+    Myrole:"I contributed to the frontend development of the web application, focusing on building a responsive, high-performance user interface that delivers a seamless user experience. My work involved translating product requirements and design concepts into clean, scalable, and reusable UI components. I collaborated closely with the product and backend teams to integrate real-time data, APIs, and AI-driven features into the frontend, ensuring smooth interactions and consistent performance across devices and browsers. Special attention was given to performance optimization, accessibility, and maintaining a modern, intuitive design system.",
+    Technology: ["Next.js", "Tailwind CSS", "REST APIs",'PostgreSQL','Modern AI technology for Muse AI'],
+    features: ["Fast checkoutA curated library of high-quality afro-inspired tracks and sounds tailored for modern storytelling.", "Every track is pre-licensed and legally cleared, removing copyright risk and licensing complexity.",'Search and filter music by mood, tempo, genre, and use-case to quickly find the perfect sound.','License tracks instantly with a simple, transparent process—no back-and-forth or legal delays.','Optimized for filmmakers, agencies, media networks, and brands producing commercial content.'],
+    link:"https://www.ordiio.com/",
+  },
 ];
 
 /* ---------------------------------------
