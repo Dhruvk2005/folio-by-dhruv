@@ -24,7 +24,7 @@ interface CarouselProps {
 
 type Card = {
   src: string;
-  title: string;
+  // title: string;
   category: string;
   content: React.ReactNode;
 };
@@ -211,7 +211,7 @@ export const Card = ({
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               ref={containerRef}
-              layoutId={layout ? `card-${card.title}` : undefined}
+              layoutId={layout ? `card-${card}` : undefined}
               className="relative z-[60]  mx-auto -my-[80px]   max-w-5xl rounded-3xl bg-[black]  font-sans md:p-10 dark:bg-neutral-900"
             >
               <button
@@ -221,16 +221,16 @@ export const Card = ({
                 <IconX className="h-6 w-6 text-neutral-100 dark:text-neutral-900" />
               </button>
               <motion.p
-                layoutId={layout ? `category-${card.title}` : undefined}
+                layoutId={layout ? `category-${card}` : undefined}
                 className="text-base font-medium text-black dark:text-white"
               >
                 {card.category}
               </motion.p>
               <motion.p
-                layoutId={layout ? `title-${card.title}` : undefined}
+                layoutId={layout ? `title-${card}` : undefined}
                 className="mt-4 text-2xl font-semibold text-[white] md:text-5xl "
               >
-                {card.title}
+                {card.category}
               </motion.p>
               <div className="py-10">{card.content}</div>
             </motion.div>
@@ -238,7 +238,7 @@ export const Card = ({
         )}
       </AnimatePresence>
       <motion.button
-        layoutId={layout ? `card-${card.title}` : undefined}
+        layoutId={layout ? `card-${card}` : undefined}
         onClick={handleOpen}
         className="relative z-10 flex h-80 w- flex-col items-start justify-start overflow-hidden rounded-3xl bg-gray-100 md:h-[40rem] md:w-[600px] dark:bg-neutral-900"
       >
@@ -251,15 +251,15 @@ export const Card = ({
             {card.category}
           </motion.p>
           <motion.p
-            layoutId={layout ? `title-${card.title}` : undefined}
+            layoutId={layout ? `title-${card}` : undefined}
             className="mt-2 max-w-xs text-left font-sans text-xl font-semibold [text-wrap:balance] text-white md:text-3xl"
           >
-            {card.title}
+           
           </motion.p>
         </div>
         <BlurImage
           src={card.src}
-          alt={card.title}
+          alt={card.category}
           fill
           className="absolute inset-0 z-10 object-cover"
         />

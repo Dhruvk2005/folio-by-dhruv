@@ -116,7 +116,7 @@ export const ConnectFooter = () => {
 
       {/* FOOTER TEXT */}
       <div className="text-[grey] text-[14px] sm:text-[16px] text-center pb-6">
-        Design and developed by Dhruv K. © All rights reserved.
+        Developed by Dhruv K. © All rights reserved.
       </div>
 
     </div>

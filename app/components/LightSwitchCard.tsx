@@ -260,7 +260,7 @@ const LightSwitchCard: React.FC = () => {
             }`}
           >
             {isOn 
-              ? "AI powered full Stack Developer & Product Designer" 
+              ? "AI powered full Stack Developer" 
               : "Illuminate to view portfolio"}
           </p>
           

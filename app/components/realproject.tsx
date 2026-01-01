@@ -304,7 +304,7 @@ const projects = [
       "Smooth and intuitive user experience"
     ],
     link: "https://tic-tac-toe-game-1fgw.vercel.app/",
-    code:"https://github.com/Dhruvk2005?tab=repositories"
+    code:"https://github.com/Dhruvk2005/TIC-TAC-TOE-Game"
   },
 ];
 

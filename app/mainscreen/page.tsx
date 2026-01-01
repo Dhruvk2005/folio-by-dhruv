@@ -65,7 +65,7 @@ const canvasAnim = {
   // Add 15 projects for best effect
 ];
   return (
-    <div className='' >
+    <div className='select-none' >
       <div style={{ width: '100%', height: '700px', position: 'relative' }}>
         <Navbar />
         {/* <ProfileCard/> */}

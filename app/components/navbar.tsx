@@ -28,7 +28,7 @@ const Navbar = () => {
 
   return (
 
-    <div className=' flex  justify-center items-center w-[100%] mt-[20px] fixed z-30 top-0 left-0 min-h-[80px]  ' >
+    <div className=' flex select-none justify-center items-center w-[100%] mt-[20px] fixed z-30 top-0 left-0 min-h-[80px]  ' >
       <div className=' flex justify-between items-center w-[100%] mx-[20px]  p-[10px] rounded-[50px] bg-white/10 backdrop-blur-md shadow-lg  md:w-[70%] lg:w-[60%] xl:w-[50%]  ' >
         <div>
           <p className='text-[white] text-[20px] ml-[10px]  font-bold ' >Dhruv</p>
@@ -63,7 +63,7 @@ const Navbar = () => {
       {open && (
         <div className="sm:hidden fixed right-0 top-[90px] z-50 
                   p-[10px] w-[140px] rounded-[10px]
-                  bg-gray-800 text-white font-semibold
+                  bg-[black] text-white font-semibold
                   transition-all">
 
           <ul className="text-[14px] space-y-3">

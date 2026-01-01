@@ -15,7 +15,6 @@ interface Skill {
 const ProfessionalSkillMap: React.FC = () => {
     const [hoveredSkill, setHoveredSkill] = useState<number | null>(null);
     const [selectedSkill, setSelectedSkill] = useState<number | null>(null);
-
     const [isMobile, setIsMobile] = useState(false);
 
     React.useEffect(() => {
@@ -72,6 +71,10 @@ const ProfessionalSkillMap: React.FC = () => {
             'AI/ML': '#8b5cf6'
         };
         return colors[category] || '#64748b';
+    };
+
+    const handleSkillClick = (skillId: number) => {
+        setSelectedSkill(prev => prev === skillId ? null : skillId);
     };
 
     return (
@@ -174,15 +177,14 @@ const ProfessionalSkillMap: React.FC = () => {
                         return (
                             <g
                                 key={skill.id}
-                                onMouseEnter={() => setHoveredSkill(skill.id)}
-                                onMouseLeave={() => setHoveredSkill(null)}
-                                onClick={() => setSelectedSkill(isSelected ? null : skill.id)}
-                                onTouchStart={() => setHoveredSkill(skill.id)}
-                                onTouchEnd={() => {
-                                    setHoveredSkill(null);
-                                    setSelectedSkill(isSelected ? null : skill.id);
+                                onMouseEnter={() => !isMobile && setHoveredSkill(skill.id)}
+                                onMouseLeave={() => !isMobile && setHoveredSkill(null)}
+                                onClick={() => handleSkillClick(skill.id)}
+                                style={{ 
+                                    cursor: 'pointer', 
+                                    transition: 'all 0.3s ease',
+                                    touchAction: 'manipulation'
                                 }}
-                                style={{ cursor: 'pointer', transition: 'all 0.3s ease' }}
                                 transform={`translate(${skill.x}, ${skill.y}) scale(${scale}) translate(${-skill.x}, ${-skill.y})`}
                             >
                                 {(isHovered || isSelected) && (
@@ -241,11 +243,12 @@ const ProfessionalSkillMap: React.FC = () => {
                                     fill="white"
                                     fontSize="20"
                                     fontWeight="bold"
+                                    style={{ pointerEvents: 'none' }}
                                 >
                                     {skill.icon}
                                 </text>
 
-                                <g>
+                                <g style={{ pointerEvents: 'none' }}>
                                     <circle
                                         cx={skill.x + 25}
                                         cy={skill.y - 25}
@@ -266,24 +269,26 @@ const ProfessionalSkillMap: React.FC = () => {
                                     </text>
                                 </g>
 
-                                <circle
-                                    cx={skill.x - 25}
-                                    cy={skill.y - 25}
-                                    r="12"
-                                    fill="#374151"
-                                    stroke={skill.color}
-                                    strokeWidth="2"
-                                />
-                                <text
-                                    x={skill.x - 25}
-                                    y={skill.y - 20}
-                                    textAnchor="middle"
-                                    fill="white"
-                                    fontSize="11"
-                                    fontWeight="bold"
-                                >
-                                    {skill.id}
-                                </text>
+                                <g style={{ pointerEvents: 'none' }}>
+                                    <circle
+                                        cx={skill.x - 25}
+                                        cy={skill.y - 25}
+                                        r="12"
+                                        fill="#374151"
+                                        stroke={skill.color}
+                                        strokeWidth="2"
+                                    />
+                                    <text
+                                        x={skill.x - 25}
+                                        y={skill.y - 20}
+                                        textAnchor="middle"
+                                        fill="white"
+                                        fontSize="11"
+                                        fontWeight="bold"
+                                    >
+                                        {skill.id}
+                                    </text>
+                                </g>
                             </g>
                         );
                     })}
@@ -313,7 +318,7 @@ const ProfessionalSkillMap: React.FC = () => {
                                         </div>
                                         <button
                                             onClick={() => setSelectedSkill(null)}
-                                            className="text-gray-400 hover:text-white"
+                                            className="text-gray-400 hover:text-white text-2xl leading-none p-2"
                                         >
                                             ✕
                                         </button>
