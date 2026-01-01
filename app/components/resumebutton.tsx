@@ -18,7 +18,7 @@ export function ResumeButton() {
           </span>
 
           <div className="absolute inset-0 flex items-center justify-center -translate-x-40 group-hover/modal-btn:translate-x-0 transition duration-500">
-            <img className="w-[35px]" src="/Resume.png" alt="Resume Icon" />
+            <img className="w-[35px]" src="/resume.png" alt="Resume Icon" />
           </div>
         </ModalTrigger>
 
