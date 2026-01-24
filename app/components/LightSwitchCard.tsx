@@ -1,8 +1,35 @@
 "use client";
-import React, { useState } from "react";
+import Image from "next/image";
+import React, { useEffect, useMemo, useState } from "react";
+
+type Particle = {
+  id: number;
+  leftPx: number;
+  durationS: number;
+  delayS: number;
+};
 
 const LightSwitchCard: React.FC = () => {
   const [isOn, setIsOn] = useState<boolean>(false);
+  const [viewportWidth, setViewportWidth] = useState<number>(800);
+
+  useEffect(() => {
+    const update = () => setViewportWidth(window.innerWidth || 800);
+    update();
+    window.addEventListener("resize", update, { passive: true });
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  const particles: Particle[] = useMemo(() => {
+    if (!isOn) return [];
+    const count = 25;
+    return Array.from({ length: count }, (_, i) => ({
+      id: i,
+      leftPx: Math.random() * viewportWidth,
+      durationS: Math.random() * 4 + 3,
+      delayS: Math.random() * 2,
+    }));
+  }, [isOn, viewportWidth]);
 
   return (
     <div className="relative min-h-screen bg-gradient-to-b from-[#050505] via-[#0b0b0b] to-[#0a0a0a] overflow-hidden">
@@ -33,23 +60,17 @@ const LightSwitchCard: React.FC = () => {
         {/* Animated particles */}
         {isOn && (
           <>
-            {[...Array(25)].map((_, i) => {
-              const startX = typeof window !== 'undefined' ? Math.random() * window.innerWidth : Math.random() * 800;
-              const duration = Math.random() * 4 + 3;
-              const delay = Math.random() * 2;
-              
-              return (
-                <div
-                  key={i}
-                  className="absolute w-1.5 h-1.5 bg-gray-300 rounded-full blur-[1px]"
-                  style={{
-                    left: startX,
-                    bottom: 0,
-                    animation: `floatUp ${duration}s ease-out ${delay}s infinite`
-                  }}
-                />
-              );
-            })}
+            {particles.map((p) => (
+              <div
+                key={p.id}
+                className="absolute w-1.5 h-1.5 bg-gray-300 rounded-full blur-[1px]"
+                style={{
+                  left: p.leftPx,
+                  bottom: 0,
+                  animation: `floatUp ${p.durationS}s ease-out ${p.delayS}s infinite`,
+                }}
+              />
+            ))}
           </>
         )}
         
@@ -197,12 +218,15 @@ const LightSwitchCard: React.FC = () => {
           >
             {isOn ? (
               <>
-                <img
-                  src="./Dhruv.jpg"
+                <Image
+                  src="/Dhruv.jpg"
                   alt="Dhruv"
+                  width={144}
+                  height={144}
+                  priority
                   className="relative z-10 mx-auto h-36 w-36 rounded-full object-cover grayscale-0 ring-4 ring-gray-300/60 shadow-[0_0_40px_rgba(192,192,192,0.3)]"
                   style={{
-                    animation: 'imageScale 3s ease-in-out infinite'
+                    animation: "imageScale 3s ease-in-out infinite",
                   }}
                 />
                 

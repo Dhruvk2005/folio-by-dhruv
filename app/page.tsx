@@ -1,14 +1,5 @@
-'use client'
-import React from 'react'
+import Mainscreen from "./mainscreen/page";
 
-import Mainscreen from './mainscreen/page'
-const page = () => {
-  return (
-    <div>
-      <Mainscreen/>
-      
-    </div>
-  )
+export default function Page() {
+  return <Mainscreen />;
 }
-
-export default page
