@@ -6,6 +6,11 @@ const exPage = ()=>{
             <div className='' >
                 <h1 className='text-[white] text-[30px] font-semibold  ' >Experience</h1>
             </div>
+            <div className='text-[white] w-[full] h-[100vh] flex justify-center'  >
+                <ul className='w-[]' >Indowicoders</ul>
+                <ul>technobren IT sol1utions</ul>
+                <ul></ul>
+            </div>
         </div>
     )
 }
