@@ -17,6 +17,7 @@ import { ConnectFooter } from '../components/connect'
 import PerspectiveScrollText from '../components/PerspectiveScrollText'
 import LightSwitchCard from '../components/LightSwitchCard'
 import { WebcamPixelGridDemo } from '../components/webcam'
+import Book from '../components/exp'
 // import { LaserFlowBoxExample } from '../components/uselaser'
 
 const Mainscreen = () => {
@@ -120,6 +121,9 @@ const Mainscreen = () => {
 
         <div className='' >
           <SkillJourneyMap />
+        </div>
+        <div>
+          <Book/>
         </div>
 
         <div>
