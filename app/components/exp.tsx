@@ -206,9 +206,9 @@ const CertificateModal: React.FC<CertificateModalProps> = ({ isOpen, onClose, ce
             onMouseLeave={(e) => {
               e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
             }}
-          >
+          
             Download
-          </a>
+        
         </div>
       </motion.div>
     </motion.div>
@@ -316,7 +316,7 @@ const Page: React.FC<PageProps> = ({ experience, pageNumber, isFlipping, side, o
         }}
       >
         {experience.company}
-      </motion.h2>
+      </motion.h1>
 
       <motion.h2 
         variants={itemVariants}
