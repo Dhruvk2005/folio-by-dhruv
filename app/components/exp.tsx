@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import type { Variants } from 'framer-motion';
 
 // Data structure
 interface Experience {
@@ -11,7 +12,7 @@ interface Experience {
   highlights: string[];
   techStack: string[];
   color: string;
-  certificateUrl?: string; // Optional certificate URL
+  certificateUrl?: string;
 }
 
 const experiences: Experience[] = [
@@ -30,7 +31,7 @@ const experiences: Experience[] = [
     ],
     techStack: ["TypeScript", "JavaScript", "MERN Stack", "Tailwind CSS", "Next.js"],
     color: "#4285F4",
-    certificateUrl: "/certificates/indoricoders.pdf" // Add your certificate path
+    certificateUrl: "/certificates/indoricoders.pdf"
   },
   {
     id: "exp-2",
@@ -47,7 +48,7 @@ const experiences: Experience[] = [
     ],
     techStack: ["React", "Next.js", "HTML", "Tailwind CSS", "JavaScript"],
     color: "#635BFF",
-    certificateUrl: "/certificates/technobren.pdf" // Add your certificate path
+    certificateUrl: "/certificates/technobren.pdf"
   }
 ];
 
@@ -111,7 +112,6 @@ const CertificateModal: React.FC<CertificateModalProps> = ({ isOpen, onClose, ce
           flexDirection: 'column'
         }}
       >
-        {/* Header */}
         <div style={{
           padding: '20px 24px',
           borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
@@ -129,6 +129,12 @@ const CertificateModal: React.FC<CertificateModalProps> = ({ isOpen, onClose, ce
           </h3>
           <button
             onClick={onClose}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
+            }}
             style={{
               background: 'rgba(255, 255, 255, 0.1)',
               border: 'none',
@@ -142,20 +148,13 @@ const CertificateModal: React.FC<CertificateModalProps> = ({ isOpen, onClose, ce
               color: '#ffffff',
               transition: 'all 0.2s'
             }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
-            }}
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-              <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+              <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
             </svg>
           </button>
         </div>
 
-        {/* Certificate Content */}
         <div style={{
           flex: 1,
           overflow: 'auto',
@@ -165,51 +164,10 @@ const CertificateModal: React.FC<CertificateModalProps> = ({ isOpen, onClose, ce
           justifyContent: 'center',
           backgroundColor: '#0a0a0a'
         }}>
-          <iframe
-            src={certificateUrl}
-            style={{
-              width: '100%',
-              height: '100%',
-              minHeight: '500px',
-              border: 'none',
-              borderRadius: '8px'
-            }}
-            title={`${companyName} Certificate`}
-          />
+         <img className='h-[500px]' src="/exp.png" alt="" />
         </div>
 
-        {/* Footer */}
-        <div style={{
-          padding: '16px 24px',
-          borderTop: '1px solid rgba(255, 255, 255, 0.1)',
-          display: 'flex',
-          justifyContent: 'flex-end',
-          gap: '12px'
-        }}>
-          
-            href={certificateUrl}
-            download
-            style={{
-              padding: '10px 20px',
-              borderRadius: '8px',
-              background: 'rgba(255, 255, 255, 0.1)',
-              color: '#ffffff',
-              textDecoration: 'none',
-              fontSize: '0.9rem',
-              fontWeight: 600,
-              transition: 'all 0.2s',
-              display: 'inline-block'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
-            }}
-          
-            Download
-        
-        </div>
+       
       </motion.div>
     </motion.div>
   );
@@ -225,7 +183,7 @@ interface PageProps {
 }
 
 const Page: React.FC<PageProps> = ({ experience, pageNumber, isFlipping, side, onViewCertificate }) => {
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -233,7 +191,7 @@ const Page: React.FC<PageProps> = ({ experience, pageNumber, isFlipping, side, o
     }
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
@@ -242,7 +200,7 @@ const Page: React.FC<PageProps> = ({ experience, pageNumber, isFlipping, side, o
     }
   };
 
-  const chipVariants = {
+  const chipVariants: Variants = {
     hidden: { opacity: 0, scale: 0.8 },
     visible: (custom: number) => ({
       opacity: 1,
@@ -304,7 +262,7 @@ const Page: React.FC<PageProps> = ({ experience, pageNumber, isFlipping, side, o
         opacity: 0.6
       }} />
 
-      <motion.h1 
+      <motion.h1
         variants={itemVariants}
         style={{
           fontSize: 'clamp(1.5rem, 4vw, 3rem)',
@@ -318,7 +276,7 @@ const Page: React.FC<PageProps> = ({ experience, pageNumber, isFlipping, side, o
         {experience.company}
       </motion.h1>
 
-      <motion.h2 
+      <motion.h2
         variants={itemVariants}
         style={{
           fontSize: 'clamp(1rem, 2vw, 1.4rem)',
@@ -331,7 +289,7 @@ const Page: React.FC<PageProps> = ({ experience, pageNumber, isFlipping, side, o
         {experience.role}
       </motion.h2>
 
-      <motion.p 
+      <motion.p
         variants={itemVariants}
         style={{
           fontSize: 'clamp(0.8rem, 1.5vw, 1rem)',
@@ -344,7 +302,6 @@ const Page: React.FC<PageProps> = ({ experience, pageNumber, isFlipping, side, o
         {experience.duration}
       </motion.p>
 
-      {/* Certificate Button */}
       {experience.certificateUrl && (
         <motion.button
           variants={itemVariants}
@@ -370,8 +327,8 @@ const Page: React.FC<PageProps> = ({ experience, pageNumber, isFlipping, side, o
           }}
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
           View Certificate
         </motion.button>
@@ -431,7 +388,7 @@ const Page: React.FC<PageProps> = ({ experience, pageNumber, isFlipping, side, o
               key={tech}
               variants={chipVariants}
               custom={index}
-              whileHover={{ 
+              whileHover={{
                 scale: 1.05,
                 boxShadow: `0 4px 12px ${experience.color}40`
               }}
@@ -554,7 +511,7 @@ export default function Book() {
         overflow: 'hidden',
         fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
       }}>
-        <motion.h1 
+        <motion.h1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
@@ -572,7 +529,7 @@ export default function Book() {
           Internship Journey
         </motion.h1>
 
-        <div 
+        <div
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
           style={{
@@ -584,7 +541,6 @@ export default function Book() {
             marginBottom: 'clamp(20px, 3vw, 30px)'
           }}
         >
-          {/* Left page */}
           <div style={{
             flex: 1,
             position: 'relative',
@@ -618,39 +574,38 @@ export default function Book() {
                 padding: '20px'
               }}>
                 <div>
-                  <h2 style={{ 
-                    fontSize: 'clamp(1.2rem, 3vw, 2.5rem)', 
-                    fontWeight: 300, 
-                    margin: '10px 0', 
-                    letterSpacing: '0.1em', 
-                    textTransform: 'uppercase' 
+                  <h2 style={{
+                    fontSize: 'clamp(1.2rem, 3vw, 2.5rem)',
+                    fontWeight: 300,
+                    margin: '10px 0',
+                    letterSpacing: '0.1em',
+                    textTransform: 'uppercase'
                   }}>My</h2>
-                  <h1 style={{ 
-                    fontSize: 'clamp(2rem, 6vw, 5rem)', 
-                    fontWeight: 900, 
-                    margin: '10px 0', 
-                    letterSpacing: '-0.04em', 
-                    textShadow: '0 4px 20px rgba(0, 0, 0, 0.3)' 
+                  <h1 style={{
+                    fontSize: 'clamp(2rem, 6vw, 5rem)',
+                    fontWeight: 900,
+                    margin: '10px 0',
+                    letterSpacing: '-0.04em',
+                    textShadow: '0 4px 20px rgba(0, 0, 0, 0.3)'
                   }}>Internship</h1>
-                  <h2 style={{ 
-                    fontSize: 'clamp(1.2rem, 3vw, 2.5rem)', 
-                    fontWeight: 300, 
-                    margin: '10px 0', 
-                    letterSpacing: '0.1em', 
-                    textTransform: 'uppercase' 
+                  <h2 style={{
+                    fontSize: 'clamp(1.2rem, 3vw, 2.5rem)',
+                    fontWeight: 300,
+                    margin: '10px 0',
+                    letterSpacing: '0.1em',
+                    textTransform: 'uppercase'
                   }}>Experiences</h2>
-                  <p style={{ 
-                    marginTop: 'clamp(20px, 3vw, 30px)', 
-                    fontSize: 'clamp(0.85rem, 1.5vw, 1.2rem)', 
-                    opacity: 0.7, 
-                    fontWeight: 400 
+                  <p style={{
+                    marginTop: 'clamp(20px, 3vw, 30px)',
+                    fontSize: 'clamp(0.85rem, 1.5vw, 1.2rem)',
+                    opacity: 0.7,
+                    fontWeight: 400
                   }}>A journey through {totalPages} incredible opportunities</p>
                 </div>
               </div>
             )}
           </div>
 
-          {/* Center spine */}
           <div style={{
             position: 'absolute',
             left: '50%',
@@ -663,7 +618,6 @@ export default function Book() {
             pointerEvents: 'none'
           }} />
 
-          {/* Right page with flip */}
           <div style={{
             flex: 1,
             position: 'relative',
@@ -693,7 +647,6 @@ export default function Book() {
                   transformOrigin: flipDirection === 'forward' ? 'left center' : 'right center',
                 }}
               >
-                {/* Front face */}
                 <div style={{
                   position: 'absolute',
                   width: '100%',
@@ -711,7 +664,6 @@ export default function Book() {
                   />
                 </div>
 
-                {/* Back face */}
                 <div style={{
                   position: 'absolute',
                   width: '100%',
@@ -739,15 +691,15 @@ export default function Book() {
                       textAlign: 'center',
                       padding: '20px'
                     }}>
-                      <h2 style={{ 
-                        fontSize: 'clamp(1.5rem, 4vw, 3rem)', 
-                        fontWeight: 700, 
-                        color: '#e0e0e0', 
-                        marginBottom: '12px' 
+                      <h2 style={{
+                        fontSize: 'clamp(1.5rem, 4vw, 3rem)',
+                        fontWeight: 700,
+                        color: '#e0e0e0',
+                        marginBottom: '12px'
                       }}>The End</h2>
-                      <p style={{ 
-                        fontSize: 'clamp(0.9rem, 2vw, 1.3rem)', 
-                        color: '#999999' 
+                      <p style={{
+                        fontSize: 'clamp(0.9rem, 2vw, 1.3rem)',
+                        color: '#999999'
                       }}>Thank you for reading my journey</p>
                     </div>
                   )}
@@ -757,12 +709,11 @@ export default function Book() {
           </div>
         </div>
 
-        {/* Controls */}
-        <div style={{ 
-          display: 'flex', 
-          alignItems: 'center', 
-          gap: 'clamp(16px, 3vw, 24px)', 
-          marginBottom: 'clamp(16px, 2vw, 20px)' 
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 'clamp(16px, 3vw, 24px)',
+          marginBottom: 'clamp(16px, 2vw, 20px)'
         }}>
           <motion.button
             onClick={() => flipPage('backward')}
@@ -785,20 +736,20 @@ export default function Book() {
               opacity: currentPage === 0 || isFlipping ? 0.3 : 1
             }}
           >
-            <svg width="clamp(20px, 3vw, 24px)" height="clamp(20px, 3vw, 24px)" viewBox="0 0 24 24" fill="none">
-              <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </motion.button>
 
-          <div style={{ 
-            fontSize: 'clamp(1rem, 2vw, 1.2rem)', 
-            color: '#ffffff', 
-            fontWeight: 600, 
-            display: 'flex', 
-            alignItems: 'baseline', 
-            gap: '6px', 
-            minWidth: 'clamp(60px, 10vw, 80px)', 
-            justifyContent: 'center' 
+          <div style={{
+            fontSize: 'clamp(1rem, 2vw, 1.2rem)',
+            color: '#ffffff',
+            fontWeight: 600,
+            display: 'flex',
+            alignItems: 'baseline',
+            gap: '6px',
+            minWidth: 'clamp(60px, 10vw, 80px)',
+            justifyContent: 'center'
           }}>
             <span style={{ fontSize: 'clamp(1.3rem, 3vw, 1.8rem)', fontWeight: 700 }}>{pageNumber}</span>
             <span style={{ opacity: 0.5 }}>/</span>
@@ -826,8 +777,8 @@ export default function Book() {
               opacity: currentPage === totalPages - 1 || isFlipping ? 0.3 : 1
             }}
           >
-            <svg width="clamp(20px, 3vw, 24px)" height="clamp(20px, 3vw, 24px)" viewBox="0 0 24 24" fill="none">
-              <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </motion.button>
         </div>
@@ -848,7 +799,6 @@ export default function Book() {
         </motion.p>
       </div>
 
-      {/* Certificate Modal */}
       <AnimatePresence>
         {showCertificate && selectedCertificate && (
           <CertificateModal
