@@ -19,6 +19,7 @@ import LightSwitchCard from '../components/LightSwitchCard'
 import { WebcamPixelGridDemo } from '../components/webcam'
 import Book from '../components/exp'
 // import { LaserFlowBoxExample } from '../components/uselaser'
+import { AuroraText } from '../components/aurora'
 
 const Mainscreen = () => {
   const container = {

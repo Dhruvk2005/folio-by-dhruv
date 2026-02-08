@@ -2,7 +2,8 @@
 import React, { useState } from 'react'
 import GooeyNav from './gooeyNav';
 import { Icon } from '@iconify/react/dist/iconify.js'
-import { AuroraText } from './aurora-text';
+
+import { AuroraText } from '../components/aurora'
 
 
 
