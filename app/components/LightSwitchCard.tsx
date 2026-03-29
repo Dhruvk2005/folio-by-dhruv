@@ -219,7 +219,7 @@ const LightSwitchCard: React.FC = () => {
             {isOn ? (
               <>
                 <Image
-                  src="/Dhruv.jpg"
+                  src="/dhruvv.jpeg"
                   alt="Dhruv"
                   width={144}
                   height={144}

@@ -22,7 +22,7 @@ const Navbar = () => {
     { label: "Home", href: "#home" },
     { label: "About", href: "#aboutme" },
     { label: "Projects", href: "#projects" },
-    { label: "Contact", href: "#connect" },
+    { label: "Contact", href: "#connect" },                                                 
   ];
 
   const [open, setOpen] = useState(false)
