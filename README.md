@@ -1,39 +1,26 @@
-## Dhruv Portfolio
+Personal Portfolio Website
+A modern and responsive developer portfolio website showcasing my projects, technical skills, and experience. The portfolio is designed to present my work in a clean and professional way while providing visitors with an easy way to explore my projects and contact me.
 
-Modern portfolio built with **Next.js (App Router)**, **React**, **TypeScript**, and **Tailwind CSS**, featuring motion-heavy UI and WebGL effects (Three.js / React Three Fiber).
+🚀 Features
+Modern and responsive UI design
+Project showcase with descriptions and technologies used
+About section highlighting my skills and background
+Contact section for collaboration and opportunities
+Fast and optimized performance
+🛠 Tech Stack
+Frontend: Next.js, React, Tailwind CSS
+Backend: Node.js / API routes
+Tools: Git, GitHub, VS Code
+📌 Purpose
 
-### Tech stack
-- **Framework**: Next.js
-- **UI**: React + Tailwind CSS
-- **Animation**: Framer Motion
-- **WebGL**: Three.js + `@react-three/fiber` + `@react-three/drei`
+The goal of this portfolio is to present my development work, demonstrate my technical abilities, and create a central place where recruiters and collaborators can explore my projects.
 
-### Getting started
-Install dependencies:
+📂 Projects Highlighted
+MockHire AI – AI-powered mock interview platform that generates interview questions and evaluates responses.
+AI Resume Analyzer – Tool that analyzes resumes and provides ATS-style feedback.
+Additional full-stack projects built using the MERN stack.
+📬 Contact
 
-```bash
-npm install
-```
+Feel free to reach out for collaboration, project opportunities, or discussions about web development and AI.
 
-Run the dev server:
-
-```bash
-npm run dev
-```
-
-Build for production:
-
-```bash
-npm run build
-```
-
-Start production server:
-
-```bash
-npm run start
-```
-
-### Notes / improvements
-- Replace `metadataBase` in `app/layout.tsx` with your real domain (Vercel/custom domain) for correct OpenGraph/Twitter URLs.
-- Keep images in `/public` and prefer Next `Image` for best performance.
-
+⭐ If you like this project, consider giving it a star!
