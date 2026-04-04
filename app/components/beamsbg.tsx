@@ -1,375 +1,535 @@
-'use client'
-import { forwardRef, useImperativeHandle, useEffect, useRef, useMemo, FC, ReactNode } from 'react';
+"use client";
+import React, { useRef, useEffect, useState, useCallback } from "react";
+import { cn } from "@/lib/utils";
 
-import * as THREE from 'three';
-
-import { Canvas, useFrame } from '@react-three/fiber';
-import { PerspectiveCamera } from '@react-three/drei';
-import { MathUtils } from "three";
-
-
-type UniformValue = THREE.IUniform<unknown> | unknown;
-
-interface ExtendMaterialConfig {
-  header: string;
-  vertexHeader?: string;
-  fragmentHeader?: string;
-  material?: THREE.MeshPhysicalMaterialParameters & { fog?: boolean };
-  uniforms?: Record<string, UniformValue>;
-  vertex?: Record<string, string>;
-  fragment?: Record<string, string>;
-}
-
-type ShaderWithDefines = THREE.ShaderLibShader & {
-  defines?: Record<string, string | number | boolean>;
+type WebcamPixelGridProps = {
+  /** Number of columns in the grid */
+  gridCols?: number;
+  /** Number of rows in the grid */
+  gridRows?: number;
+  /** Maximum elevation for motion detection */
+  maxElevation?: number;
+  /** Motion sensitivity (0-1) */
+  motionSensitivity?: number;
+  /** Smoothing factor for elevation transitions */
+  elevationSmoothing?: number;
+  /** Color mode: 'webcam' uses actual colors, 'monochrome' uses single color */
+  colorMode?: "webcam" | "monochrome";
+  /** Base color when in monochrome mode */
+  monochromeColor?: string;
+  /** Background color */
+  backgroundColor?: string;
+  /** Whether to mirror the webcam feed */
+  mirror?: boolean;
+  /** Gap between cells (0-1, fraction of cell size) */
+  gapRatio?: number;
+  /** Invert the colors */
+  invertColors?: boolean;
+  /** Darken factor (0-1, 0 = no darkening, 1 = fully dark) */
+  darken?: number;
+  /** Border color for cells */
+  borderColor?: string;
+  /** Border opacity (0-1) */
+  borderOpacity?: number;
+  /** Additional class name */
+  className?: string;
+  /** Callback when webcam access is denied */
+  onWebcamError?: (error: Error) => void;
+  /** Callback when webcam is ready */
+  onWebcamReady?: () => void;
 };
 
-function extendMaterial<T extends THREE.Material = THREE.Material>(
-  BaseMaterial: new (params?: THREE.MaterialParameters) => T,
-  cfg: ExtendMaterialConfig
-): THREE.ShaderMaterial {
-  const physical = THREE.ShaderLib.physical as ShaderWithDefines;
-  const { vertexShader: baseVert, fragmentShader: baseFrag, uniforms: baseUniforms } = physical;
-  const baseDefines = physical.defines ?? {};
-
-  const uniforms: Record<string, THREE.IUniform> = THREE.UniformsUtils.clone(baseUniforms);
-
-  const defaults = new BaseMaterial(cfg.material || {}) as T & {
-    color?: THREE.Color;
-    roughness?: number;
-    metalness?: number;
-    envMap?: THREE.Texture;
-    envMapIntensity?: number;
-  };
-
-  if (defaults.color) uniforms.diffuse.value = defaults.color;
-  if ('roughness' in defaults) uniforms.roughness.value = defaults.roughness;
-  if ('metalness' in defaults) uniforms.metalness.value = defaults.metalness;
-  if ('envMap' in defaults) uniforms.envMap.value = defaults.envMap;
-  if ('envMapIntensity' in defaults) uniforms.envMapIntensity.value = defaults.envMapIntensity;
-
-  Object.entries(cfg.uniforms ?? {}).forEach(([key, u]) => {
-    uniforms[key] =
-      u !== null && typeof u === 'object' && 'value' in u
-        ? (u as THREE.IUniform<unknown>)
-        : ({ value: u } as THREE.IUniform<unknown>);
-  });
-
-  let vert = `${cfg.header}\n${cfg.vertexHeader ?? ''}\n${baseVert}`;
-  let frag = `${cfg.header}\n${cfg.fragmentHeader ?? ''}\n${baseFrag}`;
-
-  for (const [inc, code] of Object.entries(cfg.vertex ?? {})) {
-    vert = vert.replace(inc, `${inc}\n${code}`);
-  }
-  for (const [inc, code] of Object.entries(cfg.fragment ?? {})) {
-    frag = frag.replace(inc, `${inc}\n${code}`);
-  }
-
-  const mat = new THREE.ShaderMaterial({
-    defines: { ...baseDefines },
-    uniforms,
-    vertexShader: vert,
-    fragmentShader: frag,
-    lights: true,
-    fog: !!cfg.material?.fog
-  });
-
-  return mat;
-}
-
-const CanvasWrapper: FC<{ children: ReactNode }> = ({ children }) => (
-  <Canvas dpr={[1, 2]} frameloop="always" className="w-full h-full relative">
-    {children}
-  </Canvas>
-);
-
-const hexToNormalizedRGB = (hex: string): [number, number, number] => {
-  const clean = hex.replace('#', '');
-  const r = parseInt(clean.substring(0, 2), 16);
-  const g = parseInt(clean.substring(2, 4), 16);
-  const b = parseInt(clean.substring(4, 6), 16);
-  return [r / 255, g / 255, b / 255];
+type PixelData = {
+  r: number;
+  g: number;
+  b: number;
+  motion: number;
+  targetElevation: number;
+  currentElevation: number;
 };
 
-const noise = `
-float random (in vec2 st) {
-    return fract(sin(dot(st.xy,
-                         vec2(12.9898,78.233)))*
-        43758.5453123);
-}
-float noise (in vec2 st) {
-    vec2 i = floor(st);
-    vec2 f = fract(st);
-    float a = random(i);
-    float b = random(i + vec2(1.0, 0.0));
-    float c = random(i + vec2(0.0, 1.0));
-    float d = random(i + vec2(1.0, 1.0));
-    vec2 u = f * f * (3.0 - 2.0 * f);
-    return mix(a, b, u.x) +
-           (c - a)* u.y * (1.0 - u.x) +
-           (d - b) * u.x * u.y;
-}
-vec4 permute(vec4 x){return mod(((x*34.0)+1.0)*x, 289.0);}
-vec4 taylorInvSqrt(vec4 r){return 1.79284291400159 - 0.85373472095314 * r;}
-vec3 fade(vec3 t) {return t*t*t*(t*(t*6.0-15.0)+10.0);}
-float cnoise(vec3 P){
-  vec3 Pi0 = floor(P);
-  vec3 Pi1 = Pi0 + vec3(1.0);
-  Pi0 = mod(Pi0, 289.0);
-  Pi1 = mod(Pi1, 289.0);
-  vec3 Pf0 = fract(P);
-  vec3 Pf1 = Pf0 - vec3(1.0);
-  vec4 ix = vec4(Pi0.x, Pi1.x, Pi0.x, Pi1.x);
-  vec4 iy = vec4(Pi0.yy, Pi1.yy);
-  vec4 iz0 = Pi0.zzzz;
-  vec4 iz1 = Pi1.zzzz;
-  vec4 ixy = permute(permute(ix) + iy);
-  vec4 ixy0 = permute(ixy + iz0);
-  vec4 ixy1 = permute(ixy + iz1);
-  vec4 gx0 = ixy0 / 7.0;
-  vec4 gy0 = fract(floor(gx0) / 7.0) - 0.5;
-  gx0 = fract(gx0);
-  vec4 gz0 = vec4(0.5) - abs(gx0) - abs(gy0);
-  vec4 sz0 = step(gz0, vec4(0.0));
-  gx0 -= sz0 * (step(0.0, gx0) - 0.5);
-  gy0 -= sz0 * (step(0.0, gy0) - 0.5);
-  vec4 gx1 = ixy1 / 7.0;
-  vec4 gy1 = fract(floor(gx1) / 7.0) - 0.5;
-  gx1 = fract(gx1);
-  vec4 gz1 = vec4(0.5) - abs(gx1) - abs(gy1);
-  vec4 sz1 = step(gz1, vec4(0.0));
-  gx1 -= sz1 * (step(0.0, gx1) - 0.5);
-  gy1 -= sz1 * (step(0.0, gy1) - 0.5);
-  vec3 g000 = vec3(gx0.x,gy0.x,gz0.x);
-  vec3 g100 = vec3(gx0.y,gy0.y,gz0.y);
-  vec3 g010 = vec3(gx0.z,gy0.z,gz0.z);
-  vec3 g110 = vec3(gx0.w,gy0.w,gz0.w);
-  vec3 g001 = vec3(gx1.x,gy1.x,gz1.x);
-  vec3 g101 = vec3(gx1.y,gy1.y,gz1.y);
-  vec3 g011 = vec3(gx1.z,gy1.z,gz1.z);
-  vec3 g111 = vec3(gx1.w,gy1.w,gz1.w);
-  vec4 norm0 = taylorInvSqrt(vec4(dot(g000,g000),dot(g010,g010),dot(g100,g100),dot(g110,g110)));
-  g000 *= norm0.x; g010 *= norm0.y; g100 *= norm0.z; g110 *= norm0.w;
-  vec4 norm1 = taylorInvSqrt(vec4(dot(g001,g001),dot(g011,g011),dot(g101,g101),dot(g111,g111)));
-  g001 *= norm1.x; g011 *= norm1.y; g101 *= norm1.z; g111 *= norm1.w;
-  float n000 = dot(g000, Pf0);
-  float n100 = dot(g100, vec3(Pf1.x,Pf0.yz));
-  float n010 = dot(g010, vec3(Pf0.x,Pf1.y,Pf0.z));
-  float n110 = dot(g110, vec3(Pf1.xy,Pf0.z));
-  float n001 = dot(g001, vec3(Pf0.xy,Pf1.z));
-  float n101 = dot(g101, vec3(Pf1.x,Pf0.y,Pf1.z));
-  float n011 = dot(g011, vec3(Pf0.x,Pf1.yz));
-  float n111 = dot(g111, Pf1);
-  vec3 fade_xyz = fade(Pf0);
-  vec4 n_z = mix(vec4(n000,n100,n010,n110),vec4(n001,n101,n011,n111),fade_xyz.z);
-  vec2 n_yz = mix(n_z.xy,n_z.zw,fade_xyz.y);
-  float n_xyz = mix(n_yz.x,n_yz.y,fade_xyz.x);
-  return 2.2 * n_xyz;
-}
-`;
-
-interface BeamsProps {
-  beamWidth?: number;
-  beamHeight?: number;
-  beamNumber?: number;
-  lightColor?: string;
-  speed?: number;
-  noiseIntensity?: number;
-  scale?: number;
-  rotation?: number;
-}
-
-const Beams: FC<BeamsProps> = ({
-  beamWidth = 2,
-  beamHeight = 15,
-  beamNumber = 12,
-  lightColor = '#ffffff',
-  speed = 2,
-  noiseIntensity = 1.75,
-  scale = 0.2,
-  rotation = 0
+export const WebcamPixelGrid: React.FC<WebcamPixelGridProps> = ({
+  gridCols = 64,
+  gridRows = 48,
+  maxElevation = 15,
+  motionSensitivity = 0.4,
+  elevationSmoothing = 0.1,
+  colorMode = "webcam",
+  monochromeColor = "#00ff88",
+  backgroundColor = "#0a0a0a",
+  mirror = true,
+  gapRatio = 0.1,
+  invertColors = false,
+  darken = 0,
+  borderColor = "#ffffff",
+  borderOpacity = 0.08,
+  className,
+  onWebcamError,
+  onWebcamReady,
 }) => {
-  const meshRef = useRef<THREE.Mesh<THREE.BufferGeometry, THREE.ShaderMaterial>>(null!);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const processingCanvasRef = useRef<HTMLCanvasElement>(null);
+  const displayCanvasRef = useRef<HTMLCanvasElement>(null);
+  const previousFrameRef = useRef<Uint8ClampedArray | null>(null);
+  const pixelDataRef = useRef<PixelData[][]>([]);
+  const animationRef = useRef<number>(0);
+  const [isReady, setIsReady] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [showErrorPopup, setShowErrorPopup] = useState(true);
 
-  const beamMaterial = useMemo(
-    () =>
-      extendMaterial(THREE.MeshStandardMaterial, {
-        header: `
-  varying vec3 vEye;
-  varying float vNoise;
-  varying vec2 vUv;
-  varying vec3 vPosition;
-  uniform float time;
-  uniform float uSpeed;
-  uniform float uNoiseIntensity;
-  uniform float uScale;
-  ${noise}`,
-        vertexHeader: `
-  float getPos(vec3 pos) {
-    vec3 noisePos =
-      vec3(pos.x * 0., pos.y - uv.y, pos.z + time * uSpeed * 3.) * uScale;
-    return cnoise(noisePos);
-  }
-  vec3 getCurrentPos(vec3 pos) {
-    vec3 newpos = pos;
-    newpos.z += getPos(pos);
-    return newpos;
-  }
-  vec3 getNormal(vec3 pos) {
-    vec3 curpos = getCurrentPos(pos);
-    vec3 nextposX = getCurrentPos(pos + vec3(0.01, 0.0, 0.0));
-    vec3 nextposZ = getCurrentPos(pos + vec3(0.0, -0.01, 0.0));
-    vec3 tangentX = normalize(nextposX - curpos);
-    vec3 tangentZ = normalize(nextposZ - curpos);
-    return normalize(cross(tangentZ, tangentX));
-  }`,
-        fragmentHeader: '',
-        vertex: {
-          '#include <begin_vertex>': `transformed.z += getPos(transformed.xyz);`,
-          '#include <beginnormal_vertex>': `objectNormal = getNormal(position.xyz);`
+  // Parse monochrome color
+  const monoRGB = React.useMemo(() => {
+    const hex = monochromeColor.replace("#", "");
+    return {
+      r: parseInt(hex.slice(0, 2), 16),
+      g: parseInt(hex.slice(2, 4), 16),
+      b: parseInt(hex.slice(4, 6), 16),
+    };
+  }, [monochromeColor]);
+
+  // Parse border color
+  const borderRGB = React.useMemo(() => {
+    const hex = borderColor.replace("#", "");
+    return {
+      r: parseInt(hex.slice(0, 2), 16),
+      g: parseInt(hex.slice(2, 4), 16),
+      b: parseInt(hex.slice(4, 6), 16),
+    };
+  }, [borderColor]);
+
+  // Initialize pixel data
+  useEffect(() => {
+    pixelDataRef.current = Array.from({ length: gridRows }, () =>
+      Array.from({ length: gridCols }, () => ({
+        r: 30,
+        g: 30,
+        b: 30,
+        motion: 0,
+        targetElevation: 0,
+        currentElevation: 0,
+      })),
+    );
+  }, [gridCols, gridRows]);
+
+  const streamRef = useRef<MediaStream | null>(null);
+
+  // Request camera access
+  const requestCameraAccess = useCallback(async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: {
+          width: { ideal: 640 },
+          height: { ideal: 480 },
+          facingMode: "user",
         },
-        fragment: {
-          '#include <dithering_fragment>': `
-    float randomNoise = noise(gl_FragCoord.xy);
-    gl_FragColor.rgb -= randomNoise / 15. * uNoiseIntensity;`
-        },
-        material: { fog: true },
-        uniforms: {
-          diffuse: new THREE.Color(...hexToNormalizedRGB('#000000')),
-          time: { shared: true, mixed: true, linked: true, value: 0 },
-          roughness: 0.3,
-          metalness: 0.3,
-          uSpeed: { shared: true, mixed: true, linked: true, value: speed },
-          envMapIntensity: 10,
-          uNoiseIntensity: noiseIntensity,
-          uScale: scale
+      });
+
+      streamRef.current = stream;
+
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+        await videoRef.current.play();
+        setIsReady(true);
+        setError(null);
+        setShowErrorPopup(false);
+        onWebcamReady?.();
+      }
+    } catch (err) {
+      const error =
+        err instanceof Error ? err : new Error("Webcam access denied");
+      setError(error.message);
+      onWebcamError?.(error);
+    }
+  }, [onWebcamError, onWebcamReady]);
+
+  // Initialize webcam on mount
+  useEffect(() => {
+    requestCameraAccess();
+
+    return () => {
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach((track) => track.stop());
+      }
+    };
+  }, [requestCameraAccess]);
+
+  // Main render loop
+  const render = useCallback(() => {
+    const video = videoRef.current;
+    const processingCanvas = processingCanvasRef.current;
+    const displayCanvas = displayCanvasRef.current;
+
+    if (!video || !processingCanvas || !displayCanvas || video.readyState < 2) {
+      animationRef.current = requestAnimationFrame(render);
+      return;
+    }
+
+    const procCtx = processingCanvas.getContext("2d", {
+      willReadFrequently: true,
+    });
+    const dispCtx = displayCanvas.getContext("2d");
+
+    if (!procCtx || !dispCtx) {
+      animationRef.current = requestAnimationFrame(render);
+      return;
+    }
+
+    // Set processing canvas size to grid dimensions
+    processingCanvas.width = gridCols;
+    processingCanvas.height = gridRows;
+
+    // Draw video to processing canvas (scaled down)
+    procCtx.save();
+    if (mirror) {
+      procCtx.scale(-1, 1);
+      procCtx.drawImage(video, -gridCols, 0, gridCols, gridRows);
+    } else {
+      procCtx.drawImage(video, 0, 0, gridCols, gridRows);
+    }
+    procCtx.restore();
+
+    // Get pixel data
+    const imageData = procCtx.getImageData(0, 0, gridCols, gridRows);
+    const currentData = imageData.data;
+    const previousData = previousFrameRef.current;
+
+    // Update pixel data with motion detection
+    const pixels = pixelDataRef.current;
+    for (let row = 0; row < gridRows; row++) {
+      for (let col = 0; col < gridCols; col++) {
+        const idx = (row * gridCols + col) * 4;
+        const r = currentData[idx];
+        const g = currentData[idx + 1];
+        const b = currentData[idx + 2];
+
+        const pixel = pixels[row]?.[col];
+        if (!pixel) continue;
+
+        // Calculate motion
+        let motion = 0;
+        if (previousData) {
+          const prevR = previousData[idx];
+          const prevG = previousData[idx + 1];
+          const prevB = previousData[idx + 2];
+          const diff =
+            Math.abs(r - prevR) + Math.abs(g - prevG) + Math.abs(b - prevB);
+          motion = Math.min(1, diff / 255 / motionSensitivity);
         }
-      }),
-    [speed, noiseIntensity, scale]
-  );
+
+        // Smooth motion
+        pixel.motion = pixel.motion * 0.7 + motion * 0.3;
+
+        // Set colors
+        let finalR = r;
+        let finalG = g;
+        let finalB = b;
+
+        if (colorMode === "monochrome") {
+          const brightness = (r + g + b) / 3 / 255;
+          finalR = Math.round(monoRGB.r * brightness);
+          finalG = Math.round(monoRGB.g * brightness);
+          finalB = Math.round(monoRGB.b * brightness);
+        }
+
+        // Apply invert
+        if (invertColors) {
+          finalR = 255 - finalR;
+          finalG = 255 - finalG;
+          finalB = 255 - finalB;
+        }
+
+        // Apply darken
+        if (darken > 0) {
+          const darkenFactor = 1 - darken;
+          finalR = Math.round(finalR * darkenFactor);
+          finalG = Math.round(finalG * darkenFactor);
+          finalB = Math.round(finalB * darkenFactor);
+        }
+
+        pixel.r = finalR;
+        pixel.g = finalG;
+        pixel.b = finalB;
+
+        // Set target elevation
+        pixel.targetElevation = pixel.motion * maxElevation;
+
+        // Smooth elevation transition
+        pixel.currentElevation +=
+          (pixel.targetElevation - pixel.currentElevation) * elevationSmoothing;
+      }
+    }
+
+    // Store current frame for next comparison
+    previousFrameRef.current = new Uint8ClampedArray(currentData);
+
+    // Render to display canvas
+    const dpr = window.devicePixelRatio || 1;
+    const displayWidth = displayCanvas.clientWidth;
+    const displayHeight = displayCanvas.clientHeight;
+
+    displayCanvas.width = displayWidth * dpr;
+    displayCanvas.height = displayHeight * dpr;
+    dispCtx.scale(dpr, dpr);
+
+    // Clear canvas
+    dispCtx.fillStyle = backgroundColor;
+    dispCtx.fillRect(0, 0, displayWidth, displayHeight);
+
+    // Calculate cell size (always square, cover entire container like object-fit: cover)
+    const cellSize = Math.max(
+      displayWidth / gridCols,
+      displayHeight / gridRows,
+    );
+    const gap = cellSize * gapRatio;
+
+    // Calculate offset to center the grid (negative offset for overflow, creating cover effect)
+    const gridWidth = cellSize * gridCols;
+    const gridHeight = cellSize * gridRows;
+    const offsetXGrid = (displayWidth - gridWidth) / 2;
+    const offsetYGrid = (displayHeight - gridHeight) / 2;
+
+    // Draw cells with 3D effect
+    for (let row = 0; row < gridRows; row++) {
+      for (let col = 0; col < gridCols; col++) {
+        const pixel = pixels[row]?.[col];
+        if (!pixel) continue;
+
+        const x = offsetXGrid + col * cellSize;
+        const y = offsetYGrid + row * cellSize;
+        const elevation = pixel.currentElevation;
+
+        // Calculate 3D offset (isometric-like projection) - MUCH larger effect
+        const offsetX = -elevation * 1.2;
+        const offsetY = -elevation * 1.8;
+
+        // Draw shadow - larger and more visible
+        if (elevation > 0.5) {
+          dispCtx.fillStyle = `rgba(0, 0, 0, ${Math.min(0.6, elevation * 0.04)})`;
+          dispCtx.fillRect(
+            x + gap / 2 + elevation * 1.5,
+            y + gap / 2 + elevation * 2.0,
+            cellSize - gap,
+            cellSize - gap,
+          );
+        }
+
+        // Draw side faces for 3D effect - thicker sides
+        if (elevation > 0.5) {
+          // Right side
+          dispCtx.fillStyle = `rgb(${Math.max(0, pixel.r - 80)}, ${Math.max(0, pixel.g - 80)}, ${Math.max(0, pixel.b - 80)})`;
+          dispCtx.beginPath();
+          dispCtx.moveTo(
+            x + cellSize - gap / 2 + offsetX,
+            y + gap / 2 + offsetY,
+          );
+          dispCtx.lineTo(x + cellSize - gap / 2, y + gap / 2);
+          dispCtx.lineTo(x + cellSize - gap / 2, y + cellSize - gap / 2);
+          dispCtx.lineTo(
+            x + cellSize - gap / 2 + offsetX,
+            y + cellSize - gap / 2 + offsetY,
+          );
+          dispCtx.closePath();
+          dispCtx.fill();
+
+          // Bottom side
+          dispCtx.fillStyle = `rgb(${Math.max(0, pixel.r - 50)}, ${Math.max(0, pixel.g - 50)}, ${Math.max(0, pixel.b - 50)})`;
+          dispCtx.beginPath();
+          dispCtx.moveTo(
+            x + gap / 2 + offsetX,
+            y + cellSize - gap / 2 + offsetY,
+          );
+          dispCtx.lineTo(x + gap / 2, y + cellSize - gap / 2);
+          dispCtx.lineTo(x + cellSize - gap / 2, y + cellSize - gap / 2);
+          dispCtx.lineTo(
+            x + cellSize - gap / 2 + offsetX,
+            y + cellSize - gap / 2 + offsetY,
+          );
+          dispCtx.closePath();
+          dispCtx.fill();
+        }
+
+        // Draw top face (main cell) - brighter when elevated
+        const brightness = 1 + elevation * 0.05;
+        dispCtx.fillStyle = `rgb(${Math.min(255, Math.round(pixel.r * brightness))}, ${Math.min(255, Math.round(pixel.g * brightness))}, ${Math.min(255, Math.round(pixel.b * brightness))})`;
+        dispCtx.fillRect(
+          x + gap / 2 + offsetX,
+          y + gap / 2 + offsetY,
+          cellSize - gap,
+          cellSize - gap,
+        );
+
+        // Draw light border around top face
+        dispCtx.strokeStyle = `rgba(${borderRGB.r}, ${borderRGB.g}, ${borderRGB.b}, ${borderOpacity + elevation * 0.008})`;
+        dispCtx.lineWidth = 0.5;
+        dispCtx.strokeRect(
+          x + gap / 2 + offsetX,
+          y + gap / 2 + offsetY,
+          cellSize - gap,
+          cellSize - gap,
+        );
+      }
+    }
+
+    animationRef.current = requestAnimationFrame(render);
+  }, [
+    gridCols,
+    gridRows,
+    mirror,
+    motionSensitivity,
+    colorMode,
+    monoRGB,
+    maxElevation,
+    elevationSmoothing,
+    backgroundColor,
+    gapRatio,
+    invertColors,
+    darken,
+    borderRGB,
+    borderOpacity,
+  ]);
+
+  // Start render loop when ready
+  useEffect(() => {
+    if (!isReady) return;
+
+    animationRef.current = requestAnimationFrame(render);
+
+    return () => {
+      cancelAnimationFrame(animationRef.current);
+    };
+  }, [isReady, render]);
 
   return (
-    <CanvasWrapper>
-      <group rotation={[0, 0, MathUtils.degToRad(rotation)
-]}>
-        <PlaneNoise ref={meshRef} material={beamMaterial} count={beamNumber} width={beamWidth} height={beamHeight} />
-        <DirLight color={lightColor} position={[0, 3, 10]} />
-      </group>
-      <ambientLight intensity={1} />
-      <color attach="background" args={['#000000']} />
-      <PerspectiveCamera makeDefault position={[0, 0, 20]} fov={30} />
-    </CanvasWrapper>
+    <div className={cn("relative h-full w-full", className)}>
+      {/* Hidden video element */}
+      <video
+        ref={videoRef}
+        className="pointer-events-none absolute h-0 w-0 opacity-0"
+        playsInline
+        muted
+      />
+
+      {/* Hidden processing canvas */}
+      <canvas
+        ref={processingCanvasRef}
+        className="pointer-events-none absolute h-0 w-0 opacity-0"
+      />
+
+      {/* Display canvas with fade-in */}
+      <canvas
+        ref={displayCanvasRef}
+        className={cn(
+          "h-full w-full transition-opacity duration-1000",
+          isReady ? "opacity-100" : "opacity-0",
+        )}
+        style={{ backgroundColor }}
+      />
+
+      {/* Error popup */}
+      {error && showErrorPopup && (
+        <div className="animate-in fade-in slide-in-from-top-2 fixed top-4 right-4 z-50 duration-300">
+          <div className="relative flex max-w-sm items-start gap-3 rounded-lg border border-white/10 bg-black/80 p-4 shadow-2xl backdrop-blur-xl">
+            {/* Close button */}
+            <button
+              onClick={() => setShowErrorPopup(false)}
+              className="absolute top-2 right-2 rounded-md p-1 text-white/40 transition-colors hover:bg-white/10 hover:text-white/70"
+            >
+              <svg
+                className="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+
+            {/* Camera icon */}
+            <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-white/10">
+              <svg
+                className="h-5 w-5 text-white/60"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1.5}
+                  d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
+                />
+              </svg>
+            </div>
+
+            {/* Content */}
+            <div className="flex-1 pr-4">
+              <p className="text-sm font-medium text-white/90">
+                Camera access needed
+              </p>
+              <p className="mt-1 text-xs text-white/50">
+                Enable camera for the interactive background effect
+              </p>
+              <button
+                onClick={requestCameraAccess}
+                className="mt-3 inline-flex items-center gap-1.5 rounded-md bg-white/10 px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-white/20"
+              >
+                <svg
+                  className="h-3.5 w-3.5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
+                  />
+                </svg>
+                Enable Camera
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Minimized error indicator */}
+      {error && !showErrorPopup && (
+        <button
+          onClick={() => setShowErrorPopup(true)}
+          className="fixed top-4 right-4 z-50 flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-black/60 text-white/50 shadow-lg backdrop-blur-xl transition-all hover:scale-105 hover:bg-black/80 hover:text-white/80"
+          title="Camera access required"
+        >
+          <svg
+            className="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={1.5}
+              d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
+            />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M3 3l18 18"
+              className="text-red-400"
+              stroke="currentColor"
+            />
+          </svg>
+        </button>
+      )}
+    </div>
   );
 };
 
-function createStackedPlanesBufferGeometry(
-  n: number,
-  width: number,
-  height: number,
-  spacing: number,
-  heightSegments: number
-): THREE.BufferGeometry {
-  const geometry = new THREE.BufferGeometry();
-  const numVertices = n * (heightSegments + 1) * 2;
-  const numFaces = n * heightSegments * 2;
-  const positions = new Float32Array(numVertices * 3);
-  const indices = new Uint32Array(numFaces * 3);
-  const uvs = new Float32Array(numVertices * 2);
-
-  let vertexOffset = 0;
-  let indexOffset = 0;
-  let uvOffset = 0;
-  const totalWidth = n * width + (n - 1) * spacing;
-  const xOffsetBase = -totalWidth / 2;
-
-  for (let i = 0; i < n; i++) {
-    const xOffset = xOffsetBase + i * (width + spacing);
-    const uvXOffset = Math.random() * 300;
-    const uvYOffset = Math.random() * 300;
-
-    for (let j = 0; j <= heightSegments; j++) {
-      const y = height * (j / heightSegments - 0.5);
-      const v0 = [xOffset, y, 0];
-      const v1 = [xOffset + width, y, 0];
-      positions.set([...v0, ...v1], vertexOffset * 3);
-
-      const uvY = j / heightSegments;
-      uvs.set([uvXOffset, uvY + uvYOffset, uvXOffset + 1, uvY + uvYOffset], uvOffset);
-
-      if (j < heightSegments) {
-        const a = vertexOffset,
-          b = vertexOffset + 1,
-          c = vertexOffset + 2,
-          d = vertexOffset + 3;
-        indices.set([a, b, c, c, b, d], indexOffset);
-        indexOffset += 6;
-      }
-      vertexOffset += 2;
-      uvOffset += 4;
-    }
-  }
-
-  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-  geometry.setAttribute('uv', new THREE.BufferAttribute(uvs, 2));
-  geometry.setIndex(new THREE.BufferAttribute(indices, 1));
-  geometry.computeVertexNormals();
-  return geometry;
-}
-
-const MergedPlanes = forwardRef<
-  THREE.Mesh<THREE.BufferGeometry, THREE.ShaderMaterial>,
-  {
-    material: THREE.ShaderMaterial;
-    width: number;
-    count: number;
-    height: number;
-  }
->(({ material, width, count, height }, ref) => {
-  const mesh = useRef<THREE.Mesh<THREE.BufferGeometry, THREE.ShaderMaterial>>(null!);
-  useImperativeHandle(ref, () => mesh.current);
-  const geometry = useMemo(
-    () => createStackedPlanesBufferGeometry(count, width, height, 0, 100),
-    [count, width, height]
-  );
-  useFrame((_, delta) => {
-    mesh.current.material.uniforms.time.value += 0.1 * delta;
-  });
-  return <mesh ref={mesh} geometry={geometry} material={material} />;
-});
-MergedPlanes.displayName = 'MergedPlanes';
-
-const PlaneNoise = forwardRef<
-  THREE.Mesh<THREE.BufferGeometry, THREE.ShaderMaterial>,
-  {
-    material: THREE.ShaderMaterial;
-    width: number;
-    count: number;
-    height: number;
-  }
->((props, ref) => (
-  <MergedPlanes ref={ref} material={props.material} width={props.width} count={props.count} height={props.height} />
-));
-PlaneNoise.displayName = 'PlaneNoise';
-
-const DirLight: FC<{ position: [number, number, number]; color: string }> = ({ position, color }) => {
-  const dir = useRef<THREE.DirectionalLight>(null!);
-  useEffect(() => {
-    if (!dir.current) return;
-    const cam = dir.current.shadow.camera as THREE.Camera & {
-      top: number;
-      bottom: number;
-      left: number;
-      right: number;
-      far: number;
-    };
-    cam.top = 24;
-    cam.bottom = -24;
-    cam.left = -24;
-    cam.right = 24;
-    cam.far = 64;
-    dir.current.shadow.bias = -0.004;
-  }, []);
-  return <directionalLight ref={dir} color={color} intensity={1} position={position} />;
-};
-
-export default Beams;
+export default WebcamPixelGrid;
