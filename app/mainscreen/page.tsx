@@ -91,7 +91,7 @@ const Mainscreen = () => {
         </div>
 
         <Beams
-          beamWidth={2}
+          beamWidth ={2}
           beamHeight={15}
           beamNumber={12}
           lightColor="#ffffff"
